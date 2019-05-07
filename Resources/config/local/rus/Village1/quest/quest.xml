@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<quest startEpisode="1">
+  <name>Название квеста</name>
+  <episode num="1">
+    <dialog id="1">
+      <npc>Привет, путник! Помоги! У меня украли кольцо!</npc>
+      <hero answer="1">Давай подробнее</hero>
+      <hero answer="2">Отстань, мне некогда</hero>
+      <hero answer="0">Мне пора</hero>
+    </dialog>
+    <dialog id="2">
+      <npc>Выхожу ночью из корчьмы, а там какой-то неизвестный говорит, давай сюда всё ценное. Я под страхом смерти и отдал кольцо. Говорят, он прячется в лесу, что под город Т</npc>
+      <hero answer="3" idQuest="3">Я поищу</hero>
+      <hero answer="0">Мне некогда</hero>
+    </dialog>
+    <dialog id="3">
+      <npc>Я буду ждать здесь</npc>
+      <hero answer="0">Ок</hero>
+    </dialog>
+  </episode>
+</quest>

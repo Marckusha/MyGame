@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<map nameMap="globalMap.tmx" nn="123">
+  <location name="Cave1">
+    <route>City3</route>
+  </location>
+  <location name="Swamp1">
+    <route>Village1</route>
+  </location>
+  <location name="Forest1">
+    <route>Village3</route>
+  </location>
+  <location name="City1">
+    <route>Village1</route>
+    <route>Village2</route>
+  </location>
+  <location name="City2">
+    <route>Village2</route>
+    <route>Village3</route>
+  </location>
+  <location name="City3">
+    <route>Cave1</route>
+    <route>Village1</route>
+    <route>Village3</route>
+  </location>
+  <location name="Village1">
+    <route>Swamp1</route>
+    <route>City3</route>
+    <route>City1</route>
+  </location>
+  <location name="Village2">
+    <route>City1</route>
+    <route>City2</route>
+  </location>
+  <location name="Village3">
+    <route>City2</route>
+    <route>City3</route>
+    <route>Forest1</route>
+  </location>
+</map>

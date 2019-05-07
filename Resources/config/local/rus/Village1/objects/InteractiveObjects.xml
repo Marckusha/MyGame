@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<interactiveObjects>
+  <object id="1" name="checkpoint">Чекпоинт</object>
+  <object id="2" name="door">Дверь</object>
+  <object id="3" name="shop">Магазин</object>
+  <object id="4" name="dialog">Разговор</object>
+</interactiveObjects>

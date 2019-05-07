@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="left-down" width="4" height="3" tilewidth="256" tileheight="256" infinite="0" nextobjectid="4">
+ <tileset firstgid="1" name="imageMap" tilewidth="256" tileheight="256" tilecount="12" columns="4">
+  <image source="imageMap.jpg" width="1024" height="768"/>
+ </tileset>
+ <layer name="background" width="4" height="3" locked="1">
+  <data encoding="csv">
+1,2,3,4,
+5,6,7,8,
+9,10,11,12
+</data>
+ </layer>
+ <objectgroup name="locations" locked="1">
+  <object id="3" name="City3" type="city" x="285.667" y="263">
+   <point/>
+  </object>
+  <object id="4" name="Forest1" type="forest" x="610" y="216.667">
+   <point/>
+  </object>
+  <object id="5" name="Village3" type="village" x="560.334" y="291">
+   <point/>
+  </object>
+  <object id="6" name="City2" type="city" x="856.33" y="413">
+   <point/>
+  </object>
+  <object id="7" name="Village2" type="village" x="757" y="511">
+   <point/>
+  </object>
+  <object id="8" name="City1" type="city" x="609.667" y="569.667">
+   <point/>
+  </object>
+  <object id="9" name="Swamp1" type="swamp" x="482" y="421">
+   <point/>
+  </object>
+  <object id="10" name="Village1" type="village" x="319.666" y="503.334">
+   <point/>
+  </object>
+  <object id="11" name="Cave1" type="cave" x="146" y="314.666">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup name="player" locked="1">
+  <object id="1" name="Hero" x="300" y="282">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<localication>
+  <interface name="mainMenu">
+    <button name="continue">Продолжить</button>
+    <button name="start">Начало</button>"
+    <button name="setting" addwin="settingMenu">Настройки</button>
+    <button name="exit" addwin="exitWin">Выход</button>"
+  </interface>
+  <interface name="start">
+    <!-- 
+    **
+    **Структура интерфейса, после нажатия кнопки start
+    **
+    -->
+  </interface>
+  <interface name="setting">
+    <button name="controls">Управление</button>
+    <button name="lang">Язык интерфейса</button>
+  </interface>
+
+  <panel name="settingLang">documents\Localization\rus\languages.xml</panel>
+
+  <window name="exitWin">
+    <question>Вы действительно хотите выйти?</question>
+    <answer name="positive">Да</answer>
+    <answer name="negative">Нет</answer>
+  </window>
+</localication>

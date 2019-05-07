@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<weapons>
+  <swords>
+    <sword id="101" texture="textSword1" damage="10" damageStr="5" weight="10" price="10">Железный меч</sword>
+  </swords>
+  <bows>
+    <bow id="102" texture="textBow1" damage="10" damageStr="5" weight="5" price="20">Деревянный лук</bow>
+  </bows>
+  <arrows>
+    <arrow id="103" texture="textArrow" damage="5" damageStr="5" weight="5" price="20">Железная стрела</arrow>
+  </arrows>
+</weapons>

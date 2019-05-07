@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hero>
+  <characters>
+    <character name="hp" value="100"/>
+    <character name="damage" value="1"/>
+    <character name="mulHp" value="1"/>
+    <character name="mulDamage" value="1"/>
+    <character name="plusDamage" value="0"/>
+    <character name="skills">
+    </character>
+  </characters>
+  <things>
+  </things>
+</hero>

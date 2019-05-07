@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<actions>
+  <action id="1" name="kill">Убийство</action>
+  <action id="2" name="collection">Получить предмет</action>
+  <action id="3" name="contribute">Отдать предмет</action>
+  <action id="4" name="talk">Поговорить</action>
+</actions>

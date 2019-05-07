@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<equipments>
+  <helmets>
+    <helmet id="201" texture="textHelmet1" armor="5" price="10" weight="10">Железный шлем</helmet>
+  </helmets>
+  <pants>
+    <pant id="202" texture="textPant1" armor="5" price="10" weight="20">Льняные штаны</pant>
+  </pants>
+  <bodys>
+    <body id="203" texture="textBody" armor="3" price="20" weight="29">Кольчуга</body>
+  </bodys>
+</equipments>

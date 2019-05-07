@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+
+<!--Доработать платформенные элементы-->
+
+<platformerObjects>
+  <object id="1" name="movingPlatform"></object>
+  <object id="2" name="dangerousObstacle"></object>
+  <object id="3" name="movingObject"></object>
+</platformerObjects>

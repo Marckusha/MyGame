@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Animations>
+  <animation key="run" source="texturesConfig/textures/mainHero/runAnimation.plist" countFrame="13" duration="0,2"/>
+</Animations>

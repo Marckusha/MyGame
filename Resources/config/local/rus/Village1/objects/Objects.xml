@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--Игровые предметы-->
+<objects>
+  <!--Еда - позволяет пополнить немного здоровья и силы-->
+  <foods>
+    <food texture="pathApple" id="1" hp="6" strength="5" weight="0.1" price="10">Яблоко</food>
+    <food texture="pathMeat" id="2" hp="15" strength="8" weight="0.1" price="10">Жареное мясо</food>
+  </foods>
+  <!--
+  ***Зелья - позволяет пополнить либо здоровье, либо силу.
+  ***Отличается от еды тем, что действует намного сильнее.
+  -->
+  <potions>
+    <potion texture="pathPotion" id="1" hp="20" strength="0" weight="0.5" price="20">Слабое зелье лечения</potion>
+    <potion texture="pathPotion" id="2" hp="100" strength="0" weight="0.5" price="30">Сильное зелье лечения</potion>
+  </potions>
+  <!--Напитки позволяют восстановить силу-->
+  <potables>
+    <potable texture="pathPotion" id="1" hp="0" strength="30" weight="0.5" price="5">Чай с ромашкой</potable>
+    <potable texture="pathPotion" id="2" hp="0" strength="50" weight="0.5" price="4">Сбитень</potable>
+  </potables>
+  <!--Безделушки в основном нужны для продажи-->
+  <frippery>
+    <flip texture="pathText" id="1" weight="0.1" price="100">Кольцо</flip>
+  </frippery>
+  <!--Квест-предметы используются только для заданий и не предназначены для продажи и другой эксплуатации-->
+  <questObjects>
+    <object texture="pathText" id="1" weight="0.1">Ключ от двери</object>
+  </questObjects>
+</objects>

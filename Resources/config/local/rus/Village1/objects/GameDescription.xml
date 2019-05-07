@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--Описание всех игровых персонажей NPC-->
+
+ <players>
+  <player id="301">
+    <playerInfo hp="100" disable="0" name="Бандит" quest="0"/>
+    <equipment helmetId="1" pantId="1" bodyId="1" weaponId="1"/>
+    <objects>
+      <object name="potion" id="1"/>
+    </objects>
+  </player>
+
+  <player id="302">
+    <playerInfo hp="100" disable="0" name="Олег продавец" quest="1"/>
+    <equipment helmetId="1" pantId="1" bodyId="1" weaponId="1"/>
+    <objects></objects>
+  </player>
+</players>

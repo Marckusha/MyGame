@@ -1,0 +1,10 @@
+# Ignore files
+cocos2d
+proj.android
+proj.ios_mac
+proj.linux
+proj.tizen
+proj.win32/.vs
+proj.win32/Debug.win32
+.cocos-project.json
+CMakeLists.txt
