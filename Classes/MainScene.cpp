@@ -9,6 +9,9 @@ Scene* MainScene::createScene() {
 	return MainScene::create();
 }
 
+//TODO
+///Переписать всю инициализацию
+
 bool MainScene::init() {
 	if (!Scene::init()) {
 		return false;
@@ -23,7 +26,7 @@ bool MainScene::init() {
 	auto layer = map->getLayer("staticPlatforms");
 	this->createFixtures(layer);
 
-	_actor = std::shared_ptr<Actor>(new Actor());//new Actor();
+	_actor = std::shared_ptr<Actor>(new Actor());
 	this->addChild(_actor->getSprite());
 
 	this->scheduleUpdate();
@@ -33,24 +36,9 @@ bool MainScene::init() {
 	listener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-	//dyn = DynamicObject(Vec2(300, 300), Vec2(100, 100));
-	//this->addChild(dyn.getSprite());
-
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto camera = this->getDefaultCamera();
 	camera->setPosition(Vec2(visibleSize.width / 2.f, visibleSize.height / 2.f));
-
-	/*AnimationSet* animationSet = AnimationSet::create("texturesConfig/config/animation.xml");
-	animationSet->retain();
-	auto sprite1 = Sprite::create("player.png");
-	sprite1->retain();
-	sprite1->setAnchorPoint(Vec2(0.5, 0.5));
-	sprite1->setPosition(Vec2(400, 400));
-	this->addChild(sprite1);
-	Animation* _animation = animationSet->getAnimation("run");
-	Animate* animate = Animate::create(_animation);
-	RepeatForever* action = RepeatForever::create(animate);
-	sprite1->runAction(action);*/
 
 	_contList = ContactListener(_actor, this);
 	_world->SetContactListener(&_contList);

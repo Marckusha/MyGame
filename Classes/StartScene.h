@@ -13,10 +13,6 @@ public:
 
 	virtual void update(float dt);
 
-	/*void menuCloseCallback(cocos2d::Ref* pSender);
-
-	void onMouseDown(cocos2d::Event* event);*/
-
 	CREATE_FUNC(StartScene);
 
 private:

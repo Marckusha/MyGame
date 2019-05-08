@@ -5,6 +5,9 @@
 #include "DynamicObject.h"
 #include "ContactListener.h"
 
+//TODO
+///Переписать всю сцену
+
 class MainScene : public cocos2d::Scene {
 public:
 	static cocos2d::Scene* createScene();

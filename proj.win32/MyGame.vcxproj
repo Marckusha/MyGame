@@ -154,10 +154,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ContactListener.cpp" />
     <ClCompile Include="..\Classes\DynamicObject.cpp" />
     <ClCompile Include="..\Classes\GameInfo.cpp" />
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\Location.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
+    <ClCompile Include="..\Classes\MapScene.cpp" />
     <ClCompile Include="..\Classes\Node.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\StartScene.cpp" />
@@ -173,10 +173,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ContactListener.h" />
     <ClInclude Include="..\Classes\DynamicObject.h" />
     <ClInclude Include="..\Classes\GameInfo.h" />
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Location.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
+    <ClInclude Include="..\Classes\MapScene.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\StartScene.h" />
     <ClInclude Include="..\Classes\StaticObject.h" />

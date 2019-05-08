@@ -9,8 +9,6 @@ Scene* StartScene::createScene() {
 
 bool StartScene::init()
 {
-	//////////////////////////////
-	// 1. super init first
 	if (!Scene::init())
 	{
 		return false;
