@@ -154,6 +154,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ContactListener.cpp" />
     <ClCompile Include="..\Classes\DynamicObject.cpp" />
     <ClCompile Include="..\Classes\GameInfo.cpp" />
+    <ClCompile Include="..\Classes\GlobalPlayer.cpp" />
     <ClCompile Include="..\Classes\Location.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
@@ -173,6 +174,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ContactListener.h" />
     <ClInclude Include="..\Classes\DynamicObject.h" />
     <ClInclude Include="..\Classes\GameInfo.h" />
+    <ClInclude Include="..\Classes\GlobalPlayer.h" />
     <ClInclude Include="..\Classes\Location.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\MainScene.h" />

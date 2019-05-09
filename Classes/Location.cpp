@@ -6,20 +6,20 @@ Location::Location()
 	:Sprite()
 {}
 
-Location* Location::createBox() {
+Location* Location::createLocation() {
 	Location* location = new Location();
 	location->autorelease();
 	return location;
 }
 
-Location* Location::createBox(const std::string& fileName) {
+Location* Location::createLocation(const std::string& fileName) {
 	Location* location = new Location();
 	location->initWithFile(fileName);
 	location->autorelease();
 	return location;
 }
 
-Location* Location::createBoxWithSpriteFrameName(const std::string& spriteFrameName) {
+Location* Location::createLocationWithSpriteFrameName(const std::string& spriteFrameName) {
 	Location* location = new Location();
 	location->initWithSpriteFrameName(spriteFrameName);
 	location->autorelease();

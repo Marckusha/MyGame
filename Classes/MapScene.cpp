@@ -27,6 +27,7 @@ bool MapScene::init() {
 
 	TMXObjectGroup* mapObjectLoc = map->getObjectGroup("locations");
 	ValueVector vectorObjectLocation = mapObjectLoc->getObjects();
+	std::vector<Vec2> positionLocation;
 
 	for (auto object : vectorObjectLocation) {
 		float x = object.asValueMap().at("x").asFloat();
@@ -36,26 +37,29 @@ bool MapScene::init() {
 		auto nameTextOrigin = object.asValueMap().at("nameTextureOrigin").asString();
 		auto nameTextureLight = object.asValueMap().at("nameTextureLight").asString();
 
-		Location* loc = Location::createBoxWithSpriteFrameName(type + ".png");
+		Location* loc = Location::createLocationWithSpriteFrameName(type + ".png");
 		loc->setName(name);
 		loc->setPosition(x, y);
 		loc->setNameTexture(nameTextOrigin, nameTextureLight);
 		_locations.pushBack(loc);
 		this->addChild(loc);
-	}
 
-	//TODO
-	///задать стартовую позицию из tmx карты
-	_startPosition = 0;
+		positionLocation.push_back(Vec2(x, y));
+	}
 
 	TMXObjectGroup* heroObject = map->getObjectGroup("player");
 	ValueMap player = heroObject->getObject("Hero");
 
 	//TODO
 	///Сделать нормальную фишку
-	_character = Sprite::create("texturesConfig/textures/globalMap/horse.png");
-	_character->setPosition(player.at("x").asFloat(), player.at("y").asFloat());
-	this->addChild(_character);
+	_player = GlobalPlayer::createPlayer("texturesConfig/textures/globalMap/horse.png");
+	_player->setPosition(player.at("x").asFloat(), player.at("y").asFloat());
+	_player->initPositionLocation(positionLocation);
+	this->addChild(_player);
+
+	//TODO
+	///задать стартовую позицию из tmx карты
+	_player->initStartPostion(0);
 
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(MapScene::onMouseDown, this);
@@ -64,13 +68,17 @@ bool MapScene::init() {
 
 	_parsingRoutes(routesFileName);
 
+	this->scheduleUpdate();
+
 	return true;
+}
+
+void MapScene::update(float dt) {
+	_player->update(dt);
 }
 
 void MapScene::onMouseDown(Event* event) {
 	EventMouse* eventMouse = (EventMouse*)event;
-
-	/*Test algorithm*/
 
 	Vec2 posMouse = Vec2(eventMouse->getCursorX(), eventMouse->getCursorY());
 
@@ -86,9 +94,9 @@ void MapScene::onMouseDown(Event* event) {
 	for (size_t i = 0; i < _locations.size(); ++i) {
 
 		if (_locations.at(i)->getBoundingBox().containsPoint(posMouse)) {
-			_initPath(i);
 			//TODO
 			///smth to do
+			_player->moveTo(i);
 		}
 	}
 }
@@ -147,7 +155,7 @@ bool MapScene::_parsingRoutes(const std::string& fileName) {
 
 void MapScene::_initGraph(const std::vector< std::pair<std::string, std::string> >& vectRoutes) {
 
-	_graph = std::vector < std::vector<std::pair<int, int>> >(_locations.size());
+	std::vector< std::vector<std::pair<int, int>> > graph(_locations.size());
 
 	for (auto route : vectRoutes) {
 
@@ -161,7 +169,7 @@ void MapScene::_initGraph(const std::vector< std::pair<std::string, std::string>
 						auto secondPoint = _locations.at(i)->getPosition();
 						int distance = firstPoint.distance(secondPoint);
 						
-						_graph[i].push_back(std::pair<int, int>(j, distance));
+						graph[i].push_back(std::pair<int, int>(j, distance));
 						break;
 					}
 				}
@@ -169,9 +177,10 @@ void MapScene::_initGraph(const std::vector< std::pair<std::string, std::string>
 			}
 		}
 	}
+	_player->initGraphWay(graph);
 }
 
-void MapScene::_initPath(int positionTo) {
+/*void MapScene::_initPath(int positionTo) {
 
 	const int INF = 10000000;
 
@@ -220,7 +229,7 @@ void MapScene::_initPath(int positionTo) {
 		_path.push_back(v);
 	_path.push_back(s);
 	reverse(_path.begin(), _path.end());
-}
+}*/
 
 void MapScene::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->end();

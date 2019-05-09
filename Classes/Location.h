@@ -5,9 +5,9 @@ class Location : public cocos2d::Sprite {
 public:
 	Location();
 
-	static Location* createBox();
-	static Location* createBox(const std::string& fileName);
-	static Location* createBoxWithSpriteFrameName(const std::string& spriteFrameName);
+	static Location* createLocation();
+	static Location* createLocation(const std::string& fileName);
+	static Location* createLocationWithSpriteFrameName(const std::string& spriteFrameName);
 
 	void setNameTexture(const std::string& origin, const std::string& light);
 

@@ -49,6 +49,7 @@
     <ClCompile Include="..\Classes\Location.cpp">
       <Filter>src\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GlobalPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -81,6 +82,7 @@
     <ClInclude Include="..\Classes\Location.h">
       <Filter>src\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\GlobalPlayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
