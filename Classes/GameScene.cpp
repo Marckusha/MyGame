@@ -1,18 +1,19 @@
-#include "MainScene.h"
+ï»¿#include "GameScene.h"
 #include "GameInfo.h"
 #include "Player.h"
 #include "AnimationSet.h"
+#include "HorizontalDynamicObject.h"
 
 USING_NS_CC;
 
-Scene* MainScene::createScene() {
-	return MainScene::create();
+Scene* GameScene::createScene() {
+	return GameScene::create();
 }
 
 //TODO
-///Ïåðåïèñàòü âñþ èíèöèàëèçàöèþ
+///ÃÃ¥Ã°Ã¥Ã¯Ã¨Ã±Ã Ã²Ã¼ Ã¢Ã±Ã¾ Ã¨Ã­Ã¨Ã¶Ã¨Ã Ã«Ã¨Ã§Ã Ã¶Ã¨Ã¾
 
-bool MainScene::init() {
+bool GameScene::init() {
 	if (!Scene::init()) {
 		return false;
 	}
@@ -32,8 +33,8 @@ bool MainScene::init() {
 	this->scheduleUpdate();
 
 	auto listener = EventListenerKeyboard::create();
-	listener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
-	listener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
+	listener->onKeyPressed = CC_CALLBACK_2(GameScene::onKeyPressed, this);
+	listener->onKeyReleased = CC_CALLBACK_2(GameScene::onKeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -42,16 +43,32 @@ bool MainScene::init() {
 
 	_contList = ContactListener(_actor, this);
 	_world->SetContactListener(&_contList);
+
+
+	/*DEBUG*/
+	
+	//std::shared_future<BehaviorDynamicObject> behavior(new BehaviorDynamicObject());
+
+	_dyn = DynamicObject::createObject("res/red.jpg");
+	_dyn->init(Vec2(600, 240), Vec2(100, 50));
+	this->addChild(_dyn);
+
+	std::shared_ptr<MoveDynamicObject> behavior(new MoveDynamicObject());
+	behavior->setSpeed(5.f);
+	behavior->setBorders(Vec2(600, 240), Vec2(1000, 240));
+	_dyn->initBehavior(behavior);
+
 	return true;
 }
 
-void MainScene::update(float dt) {
-	
+void GameScene::update(float dt) {
+
 	float timeStep = 1.f / 60.f;
 	_world->Step(dt, 6, 2);
 
 	_actor->update(dt);
 	//dyn.update(dt);
+	_dyn->update(dt);
 
 	this->updateCamera(dt);
 
@@ -61,21 +78,21 @@ void MainScene::update(float dt) {
 	actorPosX = _actor->getSprite()->getPositionX();
 	actorPosY = _actor->getSprite()->getPositionY();
 
-	if(dt != 0) {
+	if (dt != 0) {
 		speedActor = deltaActorPosX / dt;
 		speedActorY = deltaActorPosY / dt;
 	}
 }
 
-void MainScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
+void GameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 	_actor->onKeyPressed(keyCode, event);
 }
 
-void MainScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
+void GameScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	_actor->onKeyReleased(keyCode, event);
 
-	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW || 
-		keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW && _isStart) 
+	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW ||
+		keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW && _isStart)
 	{
 		_isStart = false;
 		_timer = 0.5f;
@@ -83,7 +100,7 @@ void MainScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	}
 }
 
-void MainScene::updateCamera(float dt) {
+void GameScene::updateCamera(float dt) {
 	auto camera = this->getDefaultCamera();
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto map = dynamic_cast<TMXTiledMap*>(this->getChildByName("map"));
@@ -91,7 +108,7 @@ void MainScene::updateCamera(float dt) {
 
 	/*
 	*
-	*    Êîîðäèíàòà Õ êàìåðû
+	*    ÃŠÃ®Ã®Ã°Ã¤Ã¨Ã­Ã Ã²Ã  Ã• ÃªÃ Ã¬Ã¥Ã°Ã»
 	*
 	*/
 	if (_timer > 0) {
@@ -101,7 +118,7 @@ void MainScene::updateCamera(float dt) {
 		float val = speed / delta;
 
 		speed -= val;
-		
+
 		_timer -= dt;
 		if (_timer <= 0) {
 			speed = 0;
@@ -172,7 +189,7 @@ void MainScene::updateCamera(float dt) {
 	}
 }
 
-void MainScene::createFixtures(TMXLayer* layer) {
+void GameScene::createFixtures(TMXLayer* layer) {
 	Size layerSize = layer->getLayerSize();
 	auto map = dynamic_cast<TMXTiledMap*>(this->getChildByName("map"));
 	auto mapSize = map->getMapSize();
@@ -191,9 +208,14 @@ void MainScene::createFixtures(TMXLayer* layer) {
 				float posX = (x + 1) * tileSize.width - (tileSize.width) / 2.f;
 				Vec2 objectPos = Vec2(posX - (countTile + 1) * tileSize.width / 2.f, (_y)* tileSize.height - tileSize.height / 2.f);
 				Vec2 objSize(tileSize.width * countTile, tileSize.height);
+				/*PlatformerObject* platformerObject = PlatformerObject::createObject("res/red.jpg");
+				platformerObject->init(objectPos, objSize);
+				this->addChild(platformerObject);*/
 				//StaticObject obj(objectPos, objSize);
-				//StaticObject obj(Vec2((x * map->getTileSize().width),100), Vec2(16, 16));
-				//this->addChild(obj.getSprite());
+				StaticObject* obj = StaticObject::createObject("res/red.jpg");
+				obj->init(objectPos, objSize);
+				obj->setDebug(false);
+				this->addChild(obj);
 				countTile = 0;
 			}
 		}
@@ -203,6 +225,10 @@ void MainScene::createFixtures(TMXLayer* layer) {
 			float posX = (_x + 1) * tileSize.width - (tileSize.width) / 2.f;
 			Vec2 objectPos = Vec2(posX - (countTile + 1) * tileSize.width / 2.f, (_y)* tileSize.height - tileSize.height / 2.f);
 			Vec2 objSize(tileSize.width * countTile, tileSize.height);
+			StaticObject* obj = StaticObject::createObject("res/red.jpg");
+			obj->init(objectPos, objSize);
+			obj->setDebug(false);
+			this->addChild(obj);
 			//StaticObject obj(objectPos, objSize);
 			//StaticObject obj(Vec2((x * map->getTileSize().width),100), Vec2(16, 16));
 			//this->addChild(obj.getSprite());
@@ -211,7 +237,7 @@ void MainScene::createFixtures(TMXLayer* layer) {
 	}
 }
 
-void MainScene::createRectangularFixture(TMXLayer* layer, int x, int y, float width, float height) {
+void GameScene::createRectangularFixture(TMXLayer* layer, int x, int y, float width, float height) {
 
 	GameInfo& info = GameInfo::getInstance();
 	auto world = info.getWorld();

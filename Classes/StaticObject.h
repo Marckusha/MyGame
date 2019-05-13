@@ -1,18 +1,13 @@
 #pragma once
-#include "cocos2d.h"
-#include "Box2D/Box2D.h"
+#include "PlatformerObject.h"
 
-class StaticObject {
+class StaticObject : public PlatformerObject {
 public:
+	static StaticObject* createObject();
+	static StaticObject* createObject(const std::string& fileName);
+	static StaticObject* createWithSpriteFrameName(const std::string& spriteFrameName);
+
 	StaticObject();
 
-	StaticObject(const cocos2d::Vec2& position, const cocos2d::Vec2& size);
-
-	cocos2d::Sprite* getSprite() const { return sprite; }
-
-protected:
-	b2Body* _body;
-	b2Shape* _shape;
-
-	cocos2d::Sprite* sprite;
+	virtual bool init(const cocos2d::Vec2& position, const cocos2d::Vec2& size);
 };

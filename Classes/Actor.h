@@ -3,10 +3,9 @@
 #include "Box2D/Box2D.h"
 #include "AnimationSet.h"
 
-class Actor /*: public cocos2d::Sprite*/ {
+class Actor {
 public:
-
-	enum State{jump, notjump};
+	enum State { jump, notjump };
 
 	Actor();
 
@@ -28,6 +27,7 @@ protected:
 	b2Shape* _shape;
 
 	int _countJump = 0;
+	int _countRun = 0;
 
 	cocos2d::Sprite* sprite;
 

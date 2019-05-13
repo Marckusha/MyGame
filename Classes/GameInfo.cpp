@@ -12,10 +12,8 @@ GameInfo::GameInfo() {
 
 
 	_world = std::shared_ptr<b2World>(new b2World(b2Vec2(0.f, kGravity)));
-	/*_world->SetAllowSleeping(true);
-	_world->SetContinuousPhysics(true);*/
 
-	_example = 10;
+	//_example = 10;
 }
 
 void GameInfo::init() {
@@ -28,5 +26,5 @@ void GameInfo::init() {
 	/*_world->SetAllowSleeping(true);
 	_world->SetContinuousPhysics(true);*/
 
-	_example = 10;
+	//_example = 10;
 }

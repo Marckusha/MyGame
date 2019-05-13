@@ -91,11 +91,12 @@ void MapScene::onMouseDown(Event* event) {
 		}
 	}*/
 
-	for (size_t i = 0; i < _locations.size(); ++i) {
+	for (ssize_t i = 0; i < _locations.size(); ++i) {
 
 		if (_locations.at(i)->getBoundingBox().containsPoint(posMouse)) {
 			//TODO
 			///smth to do
+			///скорость перемещения одинакова
 			_player->moveTo(i);
 		}
 	}
@@ -179,57 +180,6 @@ void MapScene::_initGraph(const std::vector< std::pair<std::string, std::string>
 	}
 	_player->initGraphWay(graph);
 }
-
-/*void MapScene::_initPath(int positionTo) {
-
-	const int INF = 10000000;
-
-	//количество вершин
-	int n = _graph.size();
-
-	//граф смежности
-	//_graph
-
-	//стартовая позиция
-	int s = _startPosition;
-
-	//минимальный вес до каждой вершини;?
-	std::vector<int> d(n, INF), p(n);
-
-	//вес стартовой позиции всегда равне нулю
-	d[s] = 0;
-	//посещенные вершины
-	std::vector<bool> u(n);
-
-	for (int i = 0; i < n; ++i) {
-		int v = -1;
-		for (int j = 0; j < n; ++j) {
-			if (!u[j] && (v == -1 || d[j] < d[v])) {
-				v = j;
-			}
-		}
-		if (d[v] == INF) {
-			break;
-		}
-		u[v] = true;
-
-		for (int j = 0; j < _graph[v].size(); ++j) {
-			int to = _graph[v][j].first;
-			int len = _graph[v][j].second;
-
-			if (d[v] + len < d[to]) {
-				d[to] = d[v] + len;
-				p[to] = v;
-			}
-		}
-	}
-
-	_path.clear();
-	for (int v = positionTo; v != s; v = p[v])
-		_path.push_back(v);
-	_path.push_back(s);
-	reverse(_path.begin(), _path.end());
-}*/
 
 void MapScene::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->end();

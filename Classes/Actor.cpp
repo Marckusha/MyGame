@@ -1,22 +1,26 @@
 #include "Actor.h"
 #include "GameInfo.h"
-#include "Box2D/Box2D.h"
 
 USING_NS_CC;
 
-const float SCALE = 30.f;
+auto SCALE = GameInfo::getInstance().getScaleWorld();
 
 Actor::Actor() {
 	auto world = GameInfo::getInstance().getWorld();
 
+	//TODO
+	///start position from XML
 	float posX = 300;
 	float posY = 300;
 
 	b2BodyDef bodyDef;
-	bodyDef.position.Set(posX/ SCALE, posY / SCALE);
+	bodyDef.position.Set(posX / SCALE, posY / SCALE);
 	bodyDef.type = b2_dynamicBody;
 	_body = world->CreateBody(&bodyDef);
 
+
+	//TODO
+	///size sprite from XML
 	float width = 133 / SCALE;
 	float height = 145 / SCALE;
 
@@ -26,7 +30,6 @@ Actor::Actor() {
 
 	b2FixtureDef fixDef;
 	fixDef.density = 0.f;
-	fixDef.restitution = 0.f;
 	fixDef.friction = 0.f;
 	fixDef.shape = _shape;
 	_body->CreateFixture(&fixDef);
@@ -38,20 +41,16 @@ Actor::Actor() {
 	_animationSet = AnimationSet::create("texturesConfig/config/animation.xml");
 	_animationSet->retain();
 
-	Animation* _animation = _animationSet->getAnimation("run");
-	Animate* animate = Animate::create(_animation);
+	Animation* animation = _animationSet->getAnimation("idle");
+	Animate* animate = Animate::create(animation);
 	RepeatForever* action = RepeatForever::create(animate);
 	sprite->runAction(action);
-
-	//this->setPosition(posX, posY);
-	//this->initWithFile("res/horse.png");
 }
 
 void Actor::update(float dt) {
 	auto pos = _body->GetPosition();
-	//auto pos2 = _position;
 	sprite->setPosition(Vec2(pos.x * SCALE, pos.y * SCALE));
-	int debug2 = 0;
+
 	if (_body->GetLinearVelocity().y != 0) {
 		_state = jump;
 	}
@@ -59,47 +58,92 @@ void Actor::update(float dt) {
 		_state = notjump;
 		_countJump = 0;
 	}
-	//_position = Vec2(pos.x, pos.y);
 }
 
 void Actor::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 
+	//TODO
+	///from XML
 	float inmpulse = 1000 / 2.f;
 
+	auto getAnimation = [=](const std::string& nameAnim) {
+		auto cacher = AnimationCache::getInstance();
+
+		Animation* animation = cacher->getAnimation(nameAnim);
+		Animate* animate = Animate::create(animation);
+		RepeatForever* action = RepeatForever::create(animate);
+		sprite->runAction(action);
+	};
+
 	if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW) {
+
+		sprite->stopAllActions();
+
+		//TODO
+		///from XML
+		getAnimation("run");
+
 		_body->SetLinearVelocity(b2Vec2(-15, 0));
 		sprite->setRotationSkewY(180);
+		_countRun++;
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW) {
+
+		sprite->stopAllActions();
+		//TODO
+		///from XML
+
+		getAnimation("run");
+
 		_body->SetLinearVelocity(b2Vec2(15, 0));
 		sprite->setRotationSkewY(0);
+		_countRun++;
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_UP_ARROW && _countJump < 2) {
-		//_body->SetLinearVelocity(b2Vec2(0, 10));
 		_body->ApplyForceToCenter(b2Vec2(0, inmpulse * 2), true);
 		++_countJump;
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_Q) {
-
-		//_body->ApplyLinearImpulse(b2Vec2(15, 0), b2Vec2(0.5, 0.5), true);
-		//_body->ApplyForce(b2Vec2(15, 0), b2Vec2(0.5, 0.5), true);
-		//_body->
 	}
 }
 
 void Actor::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
-	if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW) {
-		_body->SetLinearVelocity(b2Vec2(0, 0));
-		//_body->ApplyForceToCenter(b2Vec2(-10, 0), true);
-		
 
-		sprite->setRotationSkewY(180);
+	auto getAnimation = [=](const std::string& nameAnim) {
+		auto cacher = AnimationCache::getInstance();
+
+		Animation* animation = cacher->getAnimation(nameAnim);
+		Animate* animate = Animate::create(animation);
+		RepeatForever* action = RepeatForever::create(animate);
+		sprite->runAction(action);
+	};
+
+	if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW) {
+
+		_countRun--;
+
+		if (_countRun == 0) {
+			sprite->stopAllActions();
+			//TODO
+			///from XML
+			getAnimation("idle");
+
+			_body->SetLinearVelocity(b2Vec2(0, 0));
+			sprite->setRotationSkewY(180);
+		}
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW) {
-		_body->SetLinearVelocity(b2Vec2(0, 0));
-		auto linerVel = _body->GetLinearVelocity();
-		auto massa = _body->GetMass();
-		sprite->setRotationSkewY(0);
+		_countRun--;
+		if (_countRun == 0) {
+
+			//TODO
+			///from XML
+			sprite->stopAllActions();
+			getAnimation("idle");
+
+			_body->SetLinearVelocity(b2Vec2(0, 0));
+			sprite->setRotationSkewY(0);
+		}
 	}
 }
 

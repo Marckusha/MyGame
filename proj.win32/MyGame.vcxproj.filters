@@ -13,16 +13,22 @@
     <Filter Include="src\Scenes">
       <UniqueIdentifier>{5d11a43c-808d-410f-924a-4480b98ef04e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Interface">
-      <UniqueIdentifier>{b39023d7-fed9-4191-ac42-eff6d349dbcf}</UniqueIdentifier>
+    <Filter Include="src\InterfaceComponent">
+      <UniqueIdentifier>{7b6f1447-f5c9-420a-a32d-bc1baeff6798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GlobalMapObjects">
+      <UniqueIdentifier>{31e6750d-1515-4f0a-a7cb-06aa69a4db00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\MainSceneObjects">
+      <UniqueIdentifier>{695a2928-91f4-4d18-96f3-0d91a9b1e8f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\source">
+      <UniqueIdentifier>{052310cf-ce4a-4e90-9aa4-8d79ca41e17e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MainMenu.cpp">
       <Filter>src\Scenes</Filter>
@@ -33,30 +39,56 @@
     <ClCompile Include="..\Classes\MainScene.cpp">
       <Filter>src\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameInfo.cpp" />
     <ClCompile Include="..\Classes\Node.cpp" />
     <ClCompile Include="..\Classes\Unit.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
-    <ClCompile Include="..\Classes\Actor.cpp" />
-    <ClCompile Include="..\Classes\StaticObject.cpp" />
     <ClCompile Include="..\Classes\TestScene.cpp" />
-    <ClCompile Include="..\Classes\DynamicObject.cpp" />
-    <ClCompile Include="..\Classes\AnimationSet.cpp" />
     <ClCompile Include="..\Classes\ContactListener.cpp" />
     <ClCompile Include="..\Classes\MapScene.cpp">
       <Filter>src\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Location.cpp">
-      <Filter>src\Interface</Filter>
+      <Filter>src\GlobalMapObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GlobalPlayer.cpp" />
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GlobalPlayer.cpp">
+      <Filter>src\GlobalMapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ControllerComponent.cpp">
+      <Filter>src\InterfaceComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\KeyMouseController.cpp">
+      <Filter>src\InterfaceComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Actor.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AnimationSet.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameInfo.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlatformerObject.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StaticObject.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DynamicObject.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BehaviorDynamicObject.cpp" />
+    <ClCompile Include="..\Classes\HorizontalDynamicObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MainMenu.h">
       <Filter>src\Scenes</Filter>
@@ -67,22 +99,51 @@
     <ClInclude Include="..\Classes\MainScene.h">
       <Filter>src\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameInfo.h" />
     <ClInclude Include="..\Classes\Unit.h" />
     <ClInclude Include="..\Classes\Player.h" />
-    <ClInclude Include="..\Classes\Actor.h" />
-    <ClInclude Include="..\Classes\StaticObject.h" />
     <ClInclude Include="..\Classes\TestScene.h" />
-    <ClInclude Include="..\Classes\DynamicObject.h" />
-    <ClInclude Include="..\Classes\AnimationSet.h" />
     <ClInclude Include="..\Classes\ContactListener.h" />
     <ClInclude Include="..\Classes\MapScene.h">
       <Filter>src\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Location.h">
-      <Filter>src\Interface</Filter>
+      <Filter>src\GlobalMapObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GlobalPlayer.h" />
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GlobalPlayer.h">
+      <Filter>src\GlobalMapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ControllerComponent.h">
+      <Filter>src\InterfaceComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\KeyMouseController.h">
+      <Filter>src\InterfaceComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Actor.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AnimationSet.h">
+      <Filter>src\source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src\source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameInfo.h">
+      <Filter>src\source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlatformerObject.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StaticObject.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DynamicObject.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BehaviorDynamicObject.h" />
+    <ClInclude Include="..\Classes\HorizontalDynamicObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

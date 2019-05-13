@@ -1,7 +1,10 @@
 #pragma once
-#include "cocos2d.h"
+//#include "cocos2d.h"
 #include "Box2D/Box2D.h"
 
+/** @class GameInfo
+* @brief Синглтон;отображает информацию о мире 
+*/
 class GameInfo {
 public:
 	static GameInfo& getInstance();
@@ -10,11 +13,15 @@ public:
 
 	std::shared_ptr<b2World> getWorld() const { return _world; }
 
-	int getExample() const { return _example; }
+	float getScaleWorld() const { return _scaleWorld; } 
+
+	//int getExample() const { return _example; }
 private:
 	GameInfo();
 
 	std::shared_ptr<b2World> _world;
 
-	int _example = 0;
+	const float _scaleWorld = 30.f;
+
+	//int _example = 0;
 };

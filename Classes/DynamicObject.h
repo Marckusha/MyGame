@@ -1,22 +1,22 @@
 #pragma once
-#include "cocos2d.h"
-#include "Box2D/Box2D.h"
+#include "PlatformerObject.h"
+#include "BehaviorDynamicObject.h"
 
-USING_NS_CC;
-
-class DynamicObject {
+class DynamicObject : public PlatformerObject {
 public:
+	static DynamicObject* createObject();
+	static DynamicObject* createObject(const std::string& fileName);
+	static DynamicObject* createWithSpriteFrameName(const std::string& spriteFrameName);
+
 	DynamicObject();
 
-	DynamicObject(const cocos2d::Vec2& position, const cocos2d::Vec2& size);
+	virtual bool init(const cocos2d::Vec2& position, const cocos2d::Vec2& size);
+	void initBehavior(const std::shared_ptr<BehaviorDynamicObject>& behavior);
+
+	/*void setLinearVelocity(const cocos2d::Vec2& velocity);
+	cocos2d::Vec2 getLinearVelocity() const { _body->GetLinearVelocity(); }*/
 
 	void update(float dt);
-
-	cocos2d::Sprite* getSprite() const { return sprite; }
-
-protected:
-	b2Body* _body;
-	b2Shape* _shape;
-
-	cocos2d::Sprite* sprite;
+private:
+	std::shared_ptr<BehaviorDynamicObject> _behavior;
 };

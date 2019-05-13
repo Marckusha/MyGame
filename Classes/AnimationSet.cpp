@@ -47,7 +47,7 @@ bool AnimationSet::initWithFile(const std::string& fileName) {
 			Vector<SpriteFrame*> animFrames;
 			//Vector<SpriteFrame*> animFramesReverse;
 
-			for (int i = 1; i <= 13; ++i) {
+			for (int i = 1; i <= countFrame; ++i) {
 				std::stringstream ss;
 				ss << key << i << ".png";
 				animFrames.pushBack(cacher->getSpriteFrameByName(ss.str()));
@@ -55,7 +55,7 @@ bool AnimationSet::initWithFile(const std::string& fileName) {
 			}
 
 			Animation* anim = Animation::createWithSpriteFrames(animFrames, duration);
-			//animCacher->addAnimation(anim, key);
+			animCacher->addAnimation(anim, key);
 			_animations.insert(key, anim);
 
 			eAnim = eAnim->NextSiblingElement();

@@ -44,6 +44,9 @@ void GlobalPlayer::moveTo(int indexLocation) {
 
 void GlobalPlayer::update(float dt) {
 
+	//TODO
+	///установить стабильную скорость
+
 	if (_path.size() != 0) {
 		if (this->getNumberOfRunningActions() == 0) {
 			int i = _path.back();
