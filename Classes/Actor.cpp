@@ -58,6 +58,18 @@ void Actor::update(float dt) {
 		_state = notjump;
 		_countJump = 0;
 	}
+
+	//velocity
+	_dtPosition.x = std::abs(_prevPosition.x - sprite->getPositionX());
+	_dtPosition.y = std::abs(_prevPosition.y - sprite->getPositionY());
+
+	_prevPosition.x = sprite->getPositionX();
+	_prevPosition.y = sprite->getPositionY();
+
+	if (dt != 0) {
+		_speedActor.x = _dtPosition.x / dt;
+		_speedActor.y = _dtPosition.y / dt;
+	}
 }
 
 void Actor::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
@@ -79,6 +91,12 @@ void Actor::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 
 		sprite->stopAllActions();
 
+		auto contList = _body->GetContactList();
+		if (contList) {
+			contList->contact->SetFriction(0.f);
+		}
+		//
+
 		//TODO
 		///from XML
 		getAnimation("run");
@@ -92,6 +110,13 @@ void Actor::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		sprite->stopAllActions();
 		//TODO
 		///from XML
+		//_body->GetFixtureList()->SetFriction(0.f);
+
+		auto contList = _body->GetContactList();
+		if (contList) {
+			contList->contact->SetFriction(0.f);
+		}
+		//
 
 		getAnimation("run");
 
@@ -122,11 +147,18 @@ void Actor::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 
 		_countRun--;
 
+		//from friction on dynamic blocks
 		if (_countRun == 0) {
 			sprite->stopAllActions();
 			//TODO
 			///from XML
 			getAnimation("idle");
+
+			auto contList = _body->GetContactList();
+			if (contList) {
+				contList->contact->SetFriction(1.f);
+				contList->contact->SetEnabled(false);
+			}
 
 			_body->SetLinearVelocity(b2Vec2(0, 0));
 			sprite->setRotationSkewY(180);
@@ -140,6 +172,13 @@ void Actor::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 			///from XML
 			sprite->stopAllActions();
 			getAnimation("idle");
+			
+			auto contList = _body->GetContactList();
+			if (contList) {
+				contList->contact->SetFriction(1.f);
+				contList->contact->SetEnabled(false);
+			}
+			//_body->GetContactList()->contact->SetFriction(1.f);
 
 			_body->SetLinearVelocity(b2Vec2(0, 0));
 			sprite->setRotationSkewY(0);
@@ -147,11 +186,11 @@ void Actor::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	}
 }
 
-bool Actor::isMoving() const {
+/*bool Actor::isMoving() const {
 	if (_body->GetLinearVelocity().x > 0 || _body->GetLinearVelocity().y > 0) {
 		return true;
 	}
 	else {
 		return false;
 	}
-}
+}*/

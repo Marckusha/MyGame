@@ -11,13 +11,11 @@ public:
 
 	cocos2d::Sprite* getSprite() const { return sprite; }
 
-	void countJumpNull() { _countJump = 0; }
+	//void countJumpNull() { _countJump = 0; }
 
-	float getVelY() { return _body->GetLinearVelocity().x; }
+	cocos2d::Vec2 getVelocity() const { return _speedActor; }
 
 	void update(float dt);
-
-	bool isMoving() const;
 
 	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void onKeyReleased(cocos2d::EventKeyboard::KeyCode, cocos2d::Event* event);
@@ -34,4 +32,9 @@ protected:
 	State _state = notjump;
 
 	AnimationSet* _animationSet;
+
+	//speed
+	cocos2d::Vec2 _speedActor;
+	cocos2d::Vec2 _dtPosition;
+	cocos2d::Vec2 _prevPosition;
 };

@@ -10,9 +10,6 @@ Scene* GameScene::createScene() {
 	return GameScene::create();
 }
 
-//TODO
-///Ïåðåïèñàòü âñþ èíèöèàëèçàöèþ
-
 bool GameScene::init() {
 	if (!Scene::init()) {
 		return false;
@@ -37,25 +34,27 @@ bool GameScene::init() {
 	listener->onKeyReleased = CC_CALLBACK_2(GameScene::onKeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
+	//camera
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto camera = this->getDefaultCamera();
 	camera->setPosition(Vec2(visibleSize.width / 2.f, visibleSize.height / 2.f));
-
-	_contList = ContactListener(_actor, this);
-	_world->SetContactListener(&_contList);
+	_gameCamera = GameCamera(camera, _actor);
 
 
 	/*DEBUG*/
 	
 	//std::shared_future<BehaviorDynamicObject> behavior(new BehaviorDynamicObject());
 
+	_contList = ContactListener(_actor, this);
+	_world->SetContactListener(&_contList);
+
 	_dyn = DynamicObject::createObject("res/red.jpg");
-	_dyn->init(Vec2(600, 240), Vec2(100, 50));
+	_dyn->init(Vec2(600, 200), Vec2(100, 50));
 	this->addChild(_dyn);
 
 	std::shared_ptr<MoveDynamicObject> behavior(new MoveDynamicObject());
 	behavior->setSpeed(5.f);
-	behavior->setBorders(Vec2(600, 240), Vec2(1000, 240));
+	behavior->setBorders(Vec2(600, 240), Vec2(1500, 240));
 	_dyn->initBehavior(behavior);
 
 	return true;
@@ -67,21 +66,8 @@ void GameScene::update(float dt) {
 	_world->Step(dt, 6, 2);
 
 	_actor->update(dt);
-	//dyn.update(dt);
 	_dyn->update(dt);
-
-	this->updateCamera(dt);
-
-	deltaActorPosX = std::abs(actorPosX - _actor->getSprite()->getPositionX());
-	deltaActorPosY = std::abs(actorPosY - _actor->getSprite()->getPositionY());
-
-	actorPosX = _actor->getSprite()->getPositionX();
-	actorPosY = _actor->getSprite()->getPositionY();
-
-	if (dt != 0) {
-		speedActor = deltaActorPosX / dt;
-		speedActorY = deltaActorPosY / dt;
-	}
+	_gameCamera.update(dt);
 }
 
 void GameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
@@ -90,103 +76,7 @@ void GameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 
 void GameScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	_actor->onKeyReleased(keyCode, event);
-
-	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW ||
-		keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW && _isStart)
-	{
-		_isStart = false;
-		_timer = 0.5f;
-		speed /= 2.f;
-	}
-}
-
-void GameScene::updateCamera(float dt) {
-	auto camera = this->getDefaultCamera();
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	auto map = dynamic_cast<TMXTiledMap*>(this->getChildByName("map"));
-
-
-	/*
-	*
-	*    Êîîðäèíàòà Õ êàìåðû
-	*
-	*/
-	if (_timer > 0) {
-
-		float delta = 0.5f / dt;
-
-		float val = speed / delta;
-
-		speed -= val;
-
-		_timer -= dt;
-		if (_timer <= 0) {
-			speed = 0;
-		}
-	}
-
-	if (speedActor == 0.f && _isStart) {
-		_isStart = false;
-		_timer = 0.7f;
-		speed /= 2.f;
-	}
-
-	float camPos = camera->getPositionX() + dt * speed;
-	this->getDefaultCamera()->setPositionX(camPos);
-
-	if (camera->getPositionX() - _actor->getSprite()->getPositionX() > 100.f) {
-		speed = -450.f;
-		_isStart = true;
-	}
-
-	if (_actor->getSprite()->getPositionX() - camera->getPositionX() > 100.f) {
-		speed = 450.f;
-		_isStart = true;
-	}
-
-	if (camera->getPosition().x < visibleSize.width / (2.f)) {
-		camera->setPositionX(visibleSize.width / (2.f));
-	}
-	else if (camera->getPositionX() > map->getMapSize().width * map->getTileSize().width - (visibleSize.width / (2.f)))
-	{
-		camera->setPositionX(map->getMapSize().width * map->getTileSize().width
-			- (visibleSize.width / (2.f)));
-	}
-	/**/
-
-	/*if (_timerY > 0) {
-
-		float delta = 0.5f / dt;
-
-		float val = speedY / delta;
-
-		speedY -= val;
-
-		_timerY -= dt;
-		if (_timerY <= 0) {
-			speedY = 0;
-		}
-	}*/
-
-	float camPosY = camera->getPositionY() + dt * speedY;
-	this->getDefaultCamera()->setPositionY(camPosY);
-
-
-
-	if (camera->getPositionY() - _actor->getSprite()->getPositionY() > 50.f) {
-		speedY = -250;
-	}
-	else if (_actor->getSprite()->getPositionY() - camera->getPositionY() > 50.f) {
-		speedY = 70;
-	}
-	else {
-		speedY = 0.f;
-	}
-
-
-	if (camera->getPositionY() < visibleSize.height / 2.f) {
-		camera->setPositionY(visibleSize.height / 2.f);
-	}
+	_gameCamera.onKeyReleased(keyCode, event);
 }
 
 void GameScene::createFixtures(TMXLayer* layer) {

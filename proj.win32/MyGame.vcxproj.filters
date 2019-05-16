@@ -83,8 +83,15 @@
     <ClCompile Include="..\Classes\DynamicObject.cpp">
       <Filter>src\MainSceneObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\BehaviorDynamicObject.cpp" />
-    <ClCompile Include="..\Classes\HorizontalDynamicObject.cpp" />
+    <ClCompile Include="..\Classes\BehaviorDynamicObject.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameCamera.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HorizontalDynamicObject.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -142,8 +149,15 @@
     <ClInclude Include="..\Classes\DynamicObject.h">
       <Filter>src\MainSceneObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\BehaviorDynamicObject.h" />
-    <ClInclude Include="..\Classes\HorizontalDynamicObject.h" />
+    <ClInclude Include="..\Classes\BehaviorDynamicObject.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameCamera.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HorizontalDynamicObject.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

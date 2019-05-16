@@ -22,6 +22,4 @@ private:
 	std::shared_ptr<b2World> _world;
 
 	const float _scaleWorld = 30.f;
-
-	//int _example = 0;
 };

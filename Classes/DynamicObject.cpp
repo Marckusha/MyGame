@@ -46,7 +46,7 @@ bool DynamicObject::init(const Vec2& position, const Vec2& size) {
 
 	b2FixtureDef fixDef;
 	fixDef.restitution = 0.f;
-	fixDef.friction = 1000.f;
+	fixDef.friction = 1.f;
 	fixDef.shape = _shape;
 	_body->CreateFixture(&fixDef);
 }
@@ -55,10 +55,6 @@ void DynamicObject::initBehavior(const std::shared_ptr<BehaviorDynamicObject>& b
 	_behavior = behavior; 
 	_behavior->setBody(_body);
 }
-
-/*void DynamicObject::setLinearVelocity(const cocos2d::Vec2& velocity) {
-	_body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
-}*/
 
 void DynamicObject::update(float dt) {
 

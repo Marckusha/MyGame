@@ -4,9 +4,6 @@
 
 class PlatformerObject : public cocos2d::Sprite {
 public:
-	/*static PlatformerObject* createObject();
-	static PlatformerObject* createObject(const std::string& fileName);
-	static PlatformerObject* createWithSpriteFrameName(const std::string& spriteFrameName);*/
 
 	PlatformerObject();
 
