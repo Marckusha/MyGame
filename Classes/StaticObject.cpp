@@ -32,12 +32,15 @@ bool StaticObject::init(const Vec2& position, const Vec2& size) {
 	}
 
 	auto world = GameInfo::getInstance().getWorld();
+	auto worldNPC = GameInfo::getInstance().getWorldForNPC();
+
 	auto SCALE = GameInfo::getInstance().getScaleWorld();
 
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(position.x / SCALE, position.y / SCALE);
 	bodyDef.type = b2_staticBody;
 	_body = world->CreateBody(&bodyDef);
+	_body2 = worldNPC->CreateBody(&bodyDef);
 
 	b2PolygonShape sh;
 	sh.SetAsBox((size.x / 2.f) / SCALE, (size.y / 2.f) / SCALE);
@@ -47,4 +50,7 @@ bool StaticObject::init(const Vec2& position, const Vec2& size) {
 	fixDef.shape = _shape;
 	fixDef.friction = 1.f;
 	_body->CreateFixture(&fixDef);
+	_body2->CreateFixture(&fixDef);
+
+	return true;
 }

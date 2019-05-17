@@ -1,6 +1,6 @@
 #pragma once
 #include "cocos2d.h"
-#include "Actor.h"
+//#include "Actor.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
 #include "ContactListener.h"
@@ -49,7 +49,7 @@ private:
 	std::shared_ptr<b2World> _world;
 
 
-	std::shared_ptr<Actor> _actor;
+//	std::shared_ptr<Actor> _actor;
 
 	//Actor* actor;
 	DynamicObject dyn;

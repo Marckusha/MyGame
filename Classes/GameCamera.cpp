@@ -6,9 +6,9 @@ GameCamera::GameCamera()
 	: _camera(nullptr)
 {}
 
-GameCamera::GameCamera(Camera* camera, std::shared_ptr<Actor> actor)
+GameCamera::GameCamera(Camera* camera, std::shared_ptr<Player> _player)
 	: _camera(camera)
-	, _actor(actor)
+	, _player(_player)
 {}
 
 //TODO
@@ -40,13 +40,13 @@ void GameCamera::update(float dt) {
 	float camPos = _camera->getPositionX() + dt * _speedX;
 	_camera->setPositionX(camPos);
 
-	if (_camera->getPositionX() - _actor->getSprite()->getPositionX() > 100.f) {
-		_speedX = -_actor->getVelocity().x;
+	if (_camera->getPositionX() - _player->getSprite()->getPositionX() > 100.f) {
+		_speedX = -_player->getVelocity().x;
 		_isStart = true;
 	}
 
-	if (_actor->getSprite()->getPositionX() - _camera->getPositionX() > 100.f) {
-		_speedX = _actor->getVelocity().x;
+	if (_player->getSprite()->getPositionX() - _camera->getPositionX() > 100.f) {
+		_speedX = _player->getVelocity().x;
 		_isStart = true;
 	}
 
@@ -63,10 +63,10 @@ void GameCamera::update(float dt) {
 	float camPosY = _camera->getPositionY() + dt * _speedY;
 	_camera->getDefaultCamera()->setPositionY(camPosY);
 
-	if (_camera->getPositionY() - _actor->getSprite()->getPositionY() > 50.f) {
+	if (_camera->getPositionY() - _player->getSprite()->getPositionY() > 50.f) {
 		_speedY = -250;
 	}
-	else if (_actor->getSprite()->getPositionY() - _camera->getPositionY() > 50.f) {
+	else if (_player->getSprite()->getPositionY() - _camera->getPositionY() > 50.f) {
 		_speedY = 70;
 	}
 	else {

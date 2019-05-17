@@ -1,40 +1,35 @@
 #pragma once
-#include "cocos2d.h"
-#include "Box2D/Box2D.h"
-#include "AnimationSet.h"
+#include "BaseActor.h"
 
-class Actor {
+class ActorBehavior;
+
+class Actor : public BaseActor {
 public:
-	enum State { jump, notjump };
+	Actor::Actor(const AnimationMap& animMap, const cocos2d::Vec2& position, std::shared_ptr<b2World> world);
 
-	Actor();
+	void setBehavior(std::shared_ptr<ActorBehavior> behavior) {
+		_behavior = behavior;
+	}
 
-	cocos2d::Sprite* getSprite() const { return sprite; }
+	virtual void update(float dt) override;
 
-	//void countJumpNull() { _countJump = 0; }
+	void moveToLeft();
+	void moveToRight();
+	void stop();
 
-	cocos2d::Vec2 getVelocity() const { return _speedActor; }
-
-	void update(float dt);
-
-	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-	void onKeyReleased(cocos2d::EventKeyboard::KeyCode, cocos2d::Event* event);
+	void setSpeed(const cocos2d::Vec2& speed) {
+		_speed = speed;
+	}
 
 protected:
-	b2Body* _body;
-	b2Shape* _shape;
+	std::shared_ptr<ActorBehavior> _behavior;
 
-	int _countJump = 0;
+	/*int _countJump = 0;
 	int _countRun = 0;
-
-	cocos2d::Sprite* sprite;
-
 	State _state = notjump;
-
-	AnimationSet* _animationSet;
 
 	//speed
 	cocos2d::Vec2 _speedActor;
 	cocos2d::Vec2 _dtPosition;
-	cocos2d::Vec2 _prevPosition;
+	cocos2d::Vec2 _prevPosition;*/
 };

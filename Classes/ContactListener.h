@@ -1,15 +1,15 @@
 #pragma once
-#include "Actor.h"
+#include "Player.h"
 
 class ContactListener : public b2ContactListener {
 public:
 	ContactListener();
-	ContactListener(std::shared_ptr<Actor> actor, cocos2d::Scene* scene);
+	ContactListener(std::shared_ptr<Player> player, cocos2d::Scene* scene);
 
 	void BeginContact(b2Contact* contact);
 	void EndContact(b2Contact* contact);
 
 private:
-	std::shared_ptr<Actor> _actor;
+	std::shared_ptr<Player> _player;
 	cocos2d::Scene* _gameScene;
 };

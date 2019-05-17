@@ -1,8 +1,8 @@
 ﻿#include "GameScene.h"
 #include "GameInfo.h"
-#include "Player.h"
 #include "AnimationSet.h"
 #include "HorizontalDynamicObject.h"
+#include "PeaceBehavior.h"
 
 USING_NS_CC;
 
@@ -16,6 +16,8 @@ bool GameScene::init() {
 	}
 	auto gameInfo = GameInfo::getInstance();
 	_world = gameInfo.getWorld();
+	_worldForNPC = GameInfo::getInstance().getWorldForNPC();
+	
 
 	TMXTiledMap* map = TMXTiledMap::create("mapConfig/Village1/locationMap.tmx");
 	map->setName("map");
@@ -24,8 +26,25 @@ bool GameScene::init() {
 	auto layer = map->getLayer("staticPlatforms");
 	this->createFixtures(layer);
 
-	_actor = std::shared_ptr<Actor>(new Actor());
-	this->addChild(_actor->getSprite());
+	AnimationSet* animSet = AnimationSet::create("texturesConfig/config/animation.xml");
+	BaseActor::AnimationMap animMap;
+	animMap.insert(BaseActor::AnimationPair("idle", "idle"));
+	animMap.insert(BaseActor::AnimationPair("run", "run"));
+
+	//behavior actor
+	_baseActor = std::shared_ptr<Actor>(new Actor(animMap, Vec2(100, 300), _worldForNPC));
+	this->addChild(_baseActor->getSprite());	
+	_baseActor->setSpeed(Vec2(15.f, 0));
+
+	std::list<PeaceBehavior::Way> ways;
+	ways.push_back(PeaceBehavior::Way(3, Vec2(600, 0)));
+	ways.push_back(PeaceBehavior::Way(3, Vec2(100, 0)));
+	ways.push_back(PeaceBehavior::Way(2, Vec2(1000, 0)));
+	std::shared_ptr<PeaceBehavior> _peaceBehavior(new PeaceBehavior(_baseActor, ways));
+	_baseActor->setBehavior(_peaceBehavior);
+
+	_player = std::shared_ptr<Player>(new Player(animMap, Vec2(500, 300), _world));
+	this->addChild(_player->getSprite());
 
 	this->scheduleUpdate();
 
@@ -38,24 +57,26 @@ bool GameScene::init() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto camera = this->getDefaultCamera();
 	camera->setPosition(Vec2(visibleSize.width / 2.f, visibleSize.height / 2.f));
-	_gameCamera = GameCamera(camera, _actor);
-
-
+	_gameCamera = GameCamera(camera, _player);
+	
 	/*DEBUG*/
+
+	/*_actor = std::shared_ptr<Actor>(new Actor());
+	this->addChild(_actor->getSprite());*/
 	
 	//std::shared_future<BehaviorDynamicObject> behavior(new BehaviorDynamicObject());
 
-	_contList = ContactListener(_actor, this);
-	_world->SetContactListener(&_contList);
+	//_contList = ContactListener(_player, this);
+	//_world->SetContactListener(&_contList);
 
-	_dyn = DynamicObject::createObject("res/red.jpg");
+	/*_dyn = DynamicObject::createObject("res/red.jpg");
 	_dyn->init(Vec2(600, 200), Vec2(100, 50));
 	this->addChild(_dyn);
 
 	std::shared_ptr<MoveDynamicObject> behavior(new MoveDynamicObject());
 	behavior->setSpeed(5.f);
 	behavior->setBorders(Vec2(600, 240), Vec2(1500, 240));
-	_dyn->initBehavior(behavior);
+	_dyn->initBehavior(behavior);*/
 
 	return true;
 }
@@ -64,18 +85,20 @@ void GameScene::update(float dt) {
 
 	float timeStep = 1.f / 60.f;
 	_world->Step(dt, 6, 2);
+	_worldForNPC->Step(dt, 6, 2);
 
-	_actor->update(dt);
-	_dyn->update(dt);
+	_baseActor->update(dt);
+	_player->update(dt);
+	//_dyn->update(dt);
 	_gameCamera.update(dt);
 }
 
 void GameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
-	_actor->onKeyPressed(keyCode, event);
+	_player->onKeyPressed(keyCode, event);
 }
 
 void GameScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
-	_actor->onKeyReleased(keyCode, event);
+	_player->onKeyReleased(keyCode, event);
 	_gameCamera.onKeyReleased(keyCode, event);
 }
 

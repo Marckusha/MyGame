@@ -12,14 +12,14 @@ public:
 	void init();
 
 	std::shared_ptr<b2World> getWorld() const { return _world; }
+	std::shared_ptr<b2World> getWorldForNPC() const { return _worldForNPC; }
 
 	float getScaleWorld() const { return _scaleWorld; } 
-
-	//int getExample() const { return _example; }
 private:
 	GameInfo();
 
 	std::shared_ptr<b2World> _world;
+	std::shared_ptr<b2World> _worldForNPC;
 
 	const float _scaleWorld = 30.f;
 };

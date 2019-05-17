@@ -1,6 +1,6 @@
 #include "MainScene.h"
 #include "GameInfo.h"
-#include "Player.h"
+//#include "Player.h"
 #include "AnimationSet.h"
 
 USING_NS_CC;
@@ -26,8 +26,8 @@ bool MainScene::init() {
 	auto layer = map->getLayer("staticPlatforms");
 	this->createFixtures(layer);
 
-	_actor = std::shared_ptr<Actor>(new Actor());
-	this->addChild(_actor->getSprite());
+//	_actor = std::shared_ptr<Actor>(new Actor());
+//	this->addChild(_actor->getSprite());
 
 	this->scheduleUpdate();
 
@@ -40,39 +40,22 @@ bool MainScene::init() {
 	auto camera = this->getDefaultCamera();
 	camera->setPosition(Vec2(visibleSize.width / 2.f, visibleSize.height / 2.f));
 
-	_contList = ContactListener(_actor, this);
+	//_contList = ContactListener(_actor, this);
 	_world->SetContactListener(&_contList);
 	return true;
 }
 
 void MainScene::update(float dt) {
-	
-	float timeStep = 1.f / 60.f;
-	_world->Step(dt, 6, 2);
 
-	_actor->update(dt);
-	//dyn.update(dt);
 
-	this->updateCamera(dt);
-
-	deltaActorPosX = std::abs(actorPosX - _actor->getSprite()->getPositionX());
-	deltaActorPosY = std::abs(actorPosY - _actor->getSprite()->getPositionY());
-
-	actorPosX = _actor->getSprite()->getPositionX();
-	actorPosY = _actor->getSprite()->getPositionY();
-
-	if(dt != 0) {
-		speedActor = deltaActorPosX / dt;
-		speedActorY = deltaActorPosY / dt;
-	}
 }
 
 void MainScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
-	_actor->onKeyPressed(keyCode, event);
+	//_actor->onKeyPressed(keyCode, event);
 }
 
 void MainScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
-	_actor->onKeyReleased(keyCode, event);
+	//_actor->onKeyReleased(keyCode, event);
 
 	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW || 
 		keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW && _isStart) 
@@ -80,95 +63,6 @@ void MainScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 		_isStart = false;
 		_timer = 0.5f;
 		speed /= 2.f;
-	}
-}
-
-void MainScene::updateCamera(float dt) {
-	auto camera = this->getDefaultCamera();
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	auto map = dynamic_cast<TMXTiledMap*>(this->getChildByName("map"));
-
-
-	/*
-	*
-	*    Координата Х камеры
-	*
-	*/
-	if (_timer > 0) {
-
-		float delta = 0.5f / dt;
-
-		float val = speed / delta;
-
-		speed -= val;
-		
-		_timer -= dt;
-		if (_timer <= 0) {
-			speed = 0;
-		}
-	}
-
-	if (speedActor == 0.f && _isStart) {
-		_isStart = false;
-		_timer = 0.7f;
-		speed /= 2.f;
-	}
-
-	float camPos = camera->getPositionX() + dt * speed;
-	this->getDefaultCamera()->setPositionX(camPos);
-
-	if (camera->getPositionX() - _actor->getSprite()->getPositionX() > 100.f) {
-		speed = -450.f;
-		_isStart = true;
-	}
-
-	if (_actor->getSprite()->getPositionX() - camera->getPositionX() > 100.f) {
-		speed = 450.f;
-		_isStart = true;
-	}
-
-	if (camera->getPosition().x < visibleSize.width / (2.f)) {
-		camera->setPositionX(visibleSize.width / (2.f));
-	}
-	else if (camera->getPositionX() > map->getMapSize().width * map->getTileSize().width - (visibleSize.width / (2.f)))
-	{
-		camera->setPositionX(map->getMapSize().width * map->getTileSize().width
-			- (visibleSize.width / (2.f)));
-	}
-	/**/
-
-	/*if (_timerY > 0) {
-
-		float delta = 0.5f / dt;
-
-		float val = speedY / delta;
-
-		speedY -= val;
-
-		_timerY -= dt;
-		if (_timerY <= 0) {
-			speedY = 0;
-		}
-	}*/
-
-	float camPosY = camera->getPositionY() + dt * speedY;
-	this->getDefaultCamera()->setPositionY(camPosY);
-
-
-
-	if (camera->getPositionY() - _actor->getSprite()->getPositionY() > 50.f) {
-		speedY = -250;
-	}
-	else if (_actor->getSprite()->getPositionY() - camera->getPositionY() > 50.f) {
-		speedY = 70;
-	}
-	else {
-		speedY = 0.f;
-	}
-
-
-	if (camera->getPositionY() < visibleSize.height / 2.f) {
-		camera->setPositionY(visibleSize.height / 2.f);
 	}
 }
 

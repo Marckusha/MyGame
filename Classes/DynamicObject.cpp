@@ -49,6 +49,8 @@ bool DynamicObject::init(const Vec2& position, const Vec2& size) {
 	fixDef.friction = 1.f;
 	fixDef.shape = _shape;
 	_body->CreateFixture(&fixDef);
+
+	return true;
 }
 
 void DynamicObject::initBehavior(const std::shared_ptr<BehaviorDynamicObject>& behavior) { 

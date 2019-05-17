@@ -41,7 +41,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Node.cpp" />
     <ClCompile Include="..\Classes\Unit.cpp" />
-    <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\TestScene.cpp" />
     <ClCompile Include="..\Classes\ContactListener.cpp" />
     <ClCompile Include="..\Classes\MapScene.cpp">
@@ -92,6 +91,18 @@
     <ClCompile Include="..\Classes\HorizontalDynamicObject.cpp">
       <Filter>src\MainSceneObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ActorBehavior.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BaseActor.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PeaceBehavior.cpp">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -107,7 +118,6 @@
       <Filter>src\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Unit.h" />
-    <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\TestScene.h" />
     <ClInclude Include="..\Classes\ContactListener.h" />
     <ClInclude Include="..\Classes\MapScene.h">
@@ -156,6 +166,18 @@
       <Filter>src\MainSceneObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\HorizontalDynamicObject.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActorBehavior.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseActor.h">
+      <Filter>src\MainSceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PeaceBehavior.h">
       <Filter>src\MainSceneObjects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,11 +1,13 @@
 ﻿#pragma once
 #include "cocos2d.h"
-#include "Actor.h"
+#include "Player.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
 #include "ContactListener.h"
 #include "PlatformerObject.h"
 #include "GameCamera.h"
+#include "Actor.h"
+#include "BaseActor.h"
 
 //TODO
 ///Ïåðåïèñàòü âñþ ñöåíó
@@ -31,7 +33,11 @@ private:
 	
 private:
 	std::shared_ptr<b2World> _world;
-	std::shared_ptr<Actor> _actor;
+	std::shared_ptr<Player> _player; 
+	std::shared_ptr<Actor> _baseActor;
+	std::shared_ptr<b2World> _worldForNPC;
+
+	//std::vector<Actor> _actors;
 
 	GameCamera _gameCamera;
 	DynamicObject* _dyn;

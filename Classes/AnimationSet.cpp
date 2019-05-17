@@ -37,7 +37,7 @@ bool AnimationSet::initWithFile(const std::string& fileName) {
 			std::string key = eAnim->Attribute("key");
 			std::string source = eAnim->Attribute("source");
 			int countFrame = eAnim->IntAttribute("countFrame");
-			float duration = 0.1;//eAnim->FloatAttribute("duration");
+			float duration = 0.1f;//eAnim->FloatAttribute("duration");
 
 			auto cacher = SpriteFrameCache::getInstance();
 			cacher->addSpriteFramesWithFile(source);
@@ -61,7 +61,6 @@ bool AnimationSet::initWithFile(const std::string& fileName) {
 			eAnim = eAnim->NextSiblingElement();
 		}
 	}
-
 
 	return true;
 }

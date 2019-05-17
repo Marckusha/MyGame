@@ -1,4 +1,5 @@
 #include "PlatformerObject.h"
+#include "GameInfo.h"
 
 USING_NS_CC;
 
@@ -15,4 +16,12 @@ bool PlatformerObject::init(const Vec2& position, const Vec2& size) {
 
 void PlatformerObject::setDebug(bool select) {
 	this->setVisible(select);
+}
+
+PlatformerObject::~PlatformerObject() {
+	auto world = _body->GetWorld();
+	delete _shape;
+	if (!world->IsLocked()) {
+		world->DestroyBody(_body);
+	}
 }

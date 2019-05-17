@@ -1,10 +1,10 @@
 #pragma once
 #include "cocos2d.h"
-#include "Actor.h"
+#include "Player.h"
 
 class GameCamera {
 public:
-	GameCamera(cocos2d::Camera* camera, std::shared_ptr<Actor> actor);
+	GameCamera(cocos2d::Camera* camera, std::shared_ptr<Player> _player);
 
 	GameCamera();
 
@@ -14,7 +14,7 @@ public:
 
 private:
 	cocos2d::Camera* _camera;
-	std::shared_ptr<Actor> _actor;
+	std::shared_ptr<Player> _player;
 
 	float _timer = 0.f;
 	float _speedX = 0.f;

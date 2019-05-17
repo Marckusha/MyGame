@@ -9,5 +9,7 @@ public:
 
 	StaticObject();
 
+	virtual ~StaticObject() {}
+
 	virtual bool init(const cocos2d::Vec2& position, const cocos2d::Vec2& size);
 };

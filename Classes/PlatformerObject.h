@@ -11,10 +11,13 @@ public:
 
 	void setDebug(bool select);
 
+	virtual ~PlatformerObject();
+
 	//TODO
 	///не отображать и отключать, если объект находится вне видимости камеры
 
 protected:
 	b2Body* _body;
+	b2Body* _body2;
 	b2Shape* _shape;
 };
