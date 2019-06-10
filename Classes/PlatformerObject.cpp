@@ -24,4 +24,12 @@ PlatformerObject::~PlatformerObject() {
 	if (!world->IsLocked()) {
 		world->DestroyBody(_body);
 	}
+
+	if (_body2 == nullptr) {
+		return;
+	}
+	auto world2 = _body2->GetWorld();
+	if (!world2->IsLocked()) {
+		world2->DestroyBody(_body2);
+	}
 }

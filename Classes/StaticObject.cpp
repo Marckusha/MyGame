@@ -54,3 +54,8 @@ bool StaticObject::init(const Vec2& position, const Vec2& size) {
 
 	return true;
 }
+
+StaticObject::~StaticObject() {
+}
+
+/**/

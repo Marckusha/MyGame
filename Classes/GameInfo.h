@@ -11,6 +11,8 @@ public:
 
 	void init();
 
+	void destroy();
+
 	std::shared_ptr<b2World> getWorld() const { return _world; }
 	std::shared_ptr<b2World> getWorldForNPC() const { return _worldForNPC; }
 

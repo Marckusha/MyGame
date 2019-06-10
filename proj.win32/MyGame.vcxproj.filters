@@ -25,6 +25,21 @@
     <Filter Include="src\source">
       <UniqueIdentifier>{052310cf-ce4a-4e90-9aa4-8d79ca41e17e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\MainSceneObjects\Behavior">
+      <UniqueIdentifier>{79fa610a-c825-48d7-ad05-503eab3cbbed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\MainSceneObjects\Actors">
+      <UniqueIdentifier>{7d711c8d-851c-4415-88ca-8ade16595d34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\MainSceneObjects\PlatformerObjects">
+      <UniqueIdentifier>{b0f157fb-1bdf-4c03-9fc6-3ff45032cd2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\MainSceneObjects\WorldComponent">
+      <UniqueIdentifier>{d66ade26-9f2b-48f5-86be-3a19b270fd30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\MainSceneObjects\Interface">
+      <UniqueIdentifier>{24563dc6-5452-49b7-969e-a9213a34efb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -61,9 +76,6 @@
     <ClCompile Include="..\Classes\KeyMouseController.cpp">
       <Filter>src\InterfaceComponent</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Actor.cpp">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\AnimationSet.cpp">
       <Filter>src\source</Filter>
     </ClCompile>
@@ -73,35 +85,50 @@
     <ClCompile Include="..\Classes\GameInfo.cpp">
       <Filter>src\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PlatformerObject.cpp">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\StaticObject.cpp">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\DynamicObject.cpp">
-      <Filter>src\MainSceneObjects</Filter>
+    <ClCompile Include="..\Classes\ActorBehavior.cpp">
+      <Filter>src\MainSceneObjects\Behavior</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\BehaviorDynamicObject.cpp">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GameCamera.cpp">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HorizontalDynamicObject.cpp">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ActorBehavior.cpp">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\BaseActor.cpp">
-      <Filter>src\MainSceneObjects</Filter>
+      <Filter>src\MainSceneObjects\Behavior</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PeaceBehavior.cpp">
-      <Filter>src\MainSceneObjects</Filter>
+      <Filter>src\MainSceneObjects\Behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DamageBehavior.cpp">
+      <Filter>src\MainSceneObjects\Behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Actor.cpp">
+      <Filter>src\MainSceneObjects\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BaseActor.cpp">
+      <Filter>src\MainSceneObjects\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\MainSceneObjects\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DynamicObject.cpp">
+      <Filter>src\MainSceneObjects\PlatformerObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HorizontalDynamicObject.cpp">
+      <Filter>src\MainSceneObjects\PlatformerObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlatformerObject.cpp">
+      <Filter>src\MainSceneObjects\PlatformerObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StaticObject.cpp">
+      <Filter>src\MainSceneObjects\PlatformerObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerInfo.cpp" />
+    <ClCompile Include="..\Classes\WObjectComponent.cpp" />
+    <ClCompile Include="..\Classes\ActorFactory.cpp" />
+    <ClCompile Include="..\Classes\HealthPoint.cpp">
+      <Filter>src\MainSceneObjects\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameCamera.cpp">
+      <Filter>src\MainSceneObjects\WorldComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Object.cpp">
+      <Filter>src\MainSceneObjects\WorldComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,9 +165,6 @@
     <ClInclude Include="..\Classes\KeyMouseController.h">
       <Filter>src\InterfaceComponent</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Actor.h">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\AnimationSet.h">
       <Filter>src\source</Filter>
     </ClInclude>
@@ -150,35 +174,54 @@
     <ClInclude Include="..\Classes\GameInfo.h">
       <Filter>src\source</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PlatformerObject.h">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\StaticObject.h">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\DynamicObject.h">
-      <Filter>src\MainSceneObjects</Filter>
+    <ClInclude Include="..\Classes\ActorBehavior.h">
+      <Filter>src\MainSceneObjects\Behavior</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BehaviorDynamicObject.h">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameCamera.h">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HorizontalDynamicObject.h">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ActorBehavior.h">
-      <Filter>src\MainSceneObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BaseActor.h">
-      <Filter>src\MainSceneObjects</Filter>
+      <Filter>src\MainSceneObjects\Behavior</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PeaceBehavior.h">
-      <Filter>src\MainSceneObjects</Filter>
+      <Filter>src\MainSceneObjects\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DamageBehavior.h">
+      <Filter>src\MainSceneObjects\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Actor.h">
+      <Filter>src\MainSceneObjects\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseActor.h">
+      <Filter>src\MainSceneObjects\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\MainSceneObjects\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DynamicObject.h">
+      <Filter>src\MainSceneObjects\PlatformerObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HorizontalDynamicObject.h">
+      <Filter>src\MainSceneObjects\PlatformerObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlatformerObject.h">
+      <Filter>src\MainSceneObjects\PlatformerObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StaticObject.h">
+      <Filter>src\MainSceneObjects\PlatformerObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\WorldComponent.h">
+      <Filter>src\MainSceneObjects\WorldComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\WObjectComponent.h" />
+    <ClInclude Include="..\Classes\PlayerInfo.h" />
+    <ClInclude Include="..\Classes\ActorFactory.h" />
+    <ClInclude Include="..\Classes\NPCInfo.h" />
+    <ClInclude Include="..\Classes\HealthPoint.h">
+      <Filter>src\MainSceneObjects\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameCamera.h">
+      <Filter>src\MainSceneObjects\WorldComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Object.h">
+      <Filter>src\MainSceneObjects\WorldComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@ Actor::Actor(const AnimationMap& animMap, const Vec2& position, std::shared_ptr<
 void Actor::update(float dt) {
 	BaseActor::update(dt);
 	if (_behavior) {
-		_behavior->update(dt);
+		_behavior->update(dt, this);
 	}
 }
 
@@ -19,7 +19,7 @@ void Actor::moveToLeft() {
 	sprite->stopAllActions();
 
 	_body->SetLinearVelocity(b2Vec2(-_speed.x, 0.f));
-	_setAnimation("run");
+	_setAnimation(_animationMap.at("run"));
 	sprite->setRotationSkewY(180);
 }
 
@@ -27,12 +27,20 @@ void Actor::moveToRight() {
 	sprite->stopAllActions();
 
 	_body->SetLinearVelocity(b2Vec2(_speed.x, 0.f));
-	_setAnimation("run");
+	_setAnimation(_animationMap.at("run"));
 	sprite->setRotationSkewY(0);
 }
 void Actor::stop() {
 	sprite->stopAllActions();
 
 	_body->SetLinearVelocity(b2Vec2(0.f, 0.f));
-	_setAnimation("idle");
+	_setAnimation(_animationMap.at("idle"));
+}
+
+void Actor::apply(std::shared_ptr<Player> player) {
+	_behavior->apply(player);
+}
+
+Actor::~Actor() {
+	auto debug2 = 0;
 }

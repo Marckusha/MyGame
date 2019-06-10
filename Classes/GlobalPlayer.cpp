@@ -46,15 +46,20 @@ void GlobalPlayer::update(float dt) {
 
 	//TODO
 	///установить стабильную скорость
-
 	if (_path.size() != 0) {
 		if (this->getNumberOfRunningActions() == 0) {
+			_point = _startPosition;
 			int i = _path.back();
 			_path.pop_back();
 			_startPosition = i;
-			MoveTo* moveTo = MoveTo::create(3.f, _positionLocation[i]);
+			MoveTo* moveTo = MoveTo::create(0.5f, _positionLocation[i]);
+			func = true;
 			this->runAction(moveTo);
 		}
+	}
+	else if (func) {
+		_point = _startPosition;
+		func = false;
 	}
 }
 

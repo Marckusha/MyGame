@@ -46,10 +46,6 @@ BaseActor::BaseActor(const AnimationMap& animMap, const Vec2& position, std::sha
 	_setAnimation(nameAnim);
 }
 
-void BaseActor::init() {
-	
-}
-
 void BaseActor::update(float dt) {
 	auto SCALE = GameInfo::getInstance().getScaleWorld();
 	auto pos = _body->GetPosition();

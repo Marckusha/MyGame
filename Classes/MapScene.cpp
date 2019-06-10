@@ -1,5 +1,8 @@
 #include "MapScene.h"
 #include "tinyxml2/tinyxml2.h"
+#include "ui/CocosGUI.h"
+#include "MainMenu.h"
+#include "GameScene.h"
 
 USING_NS_CC;
 
@@ -36,11 +39,13 @@ bool MapScene::init() {
 		auto name = object.asValueMap().at("name").asString();
 		auto nameTextOrigin = object.asValueMap().at("nameTextureOrigin").asString();
 		auto nameTextureLight = object.asValueMap().at("nameTextureLight").asString();
+		auto fileNameInfo = object.asValueMap().at("fileNameInfo").asString();
 
 		Location* loc = Location::createLocationWithSpriteFrameName(type + ".png");
 		loc->setName(name);
 		loc->setPosition(x, y);
 		loc->setNameTexture(nameTextOrigin, nameTextureLight);
+		loc->setFileNameInfo(fileNameInfo);
 		_locations.pushBack(loc);
 		this->addChild(loc);
 
@@ -50,12 +55,35 @@ bool MapScene::init() {
 	TMXObjectGroup* heroObject = map->getObjectGroup("player");
 	ValueMap player = heroObject->getObject("Hero");
 
+	//auto button = Button
+
 	//TODO
 	///Сделать нормальную фишку
 	_player = GlobalPlayer::createPlayer("texturesConfig/textures/globalMap/horse.png");
 	_player->setPosition(player.at("x").asFloat(), player.at("y").asFloat());
 	_player->initPositionLocation(positionLocation);
 	this->addChild(_player);
+
+	auto button = ui::Button::create("texturesConfig/interface/mainMenu/back.png", "texturesConfig/interface/mainMenu/back1.png");
+	button->setPosition(Vec2(50, 710));
+
+	button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN: {
+			int debug1 = 0;
+			break;
+		}
+		case ui::Widget::TouchEventType::ENDED: {
+			auto director = Director::getInstance();
+			//director->getRunningScene()->removeAllChildren();
+			director->replaceScene(MainMenu::create());
+			break;
+		}
+		}
+	});
+
+	this->addChild(button);
 
 	//TODO
 	///задать стартовую позицию из tmx карты
@@ -75,6 +103,22 @@ bool MapScene::init() {
 
 void MapScene::update(float dt) {
 	_player->update(dt);
+
+	auto p1 = _point;
+	auto p2 = _player->getCurrentPoint();
+
+	if (_point == _player->getCurrentPoint() && _player->numberOfRunningActions() == 0) {
+		auto nameScene = _locations.at(_point)->getFileNameInfo();
+		if (nameScene == "nullptr") {
+			//TODO
+			//вывести окно, которое предупреждает польхователя о недоступности локации
+		}
+		else {
+			auto director = Director::getInstance();
+			director->pushScene(GameScene::createScene(nameScene));
+			_point = -1;
+		}
+	}
 }
 
 void MapScene::onMouseDown(Event* event) {
@@ -97,6 +141,7 @@ void MapScene::onMouseDown(Event* event) {
 			//TODO
 			///smth to do
 			///скорость перемещения одинакова
+			_point = i;
 			_player->moveTo(i);
 		}
 	}

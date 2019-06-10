@@ -13,6 +13,7 @@
  <objectgroup name="locations" locked="1">
   <object id="3" name="City3" type="city" x="285.667" y="263">
    <properties>
+    <property name="fileNameInfo" value="mapConfig/Village1/locationMap.tmx"/>
     <property name="nameTextureLight" value="cityLight.png"/>
     <property name="nameTextureOrigin" value="city.png"/>
    </properties>
@@ -20,6 +21,7 @@
   </object>
   <object id="4" name="Forest1" type="forest" x="610" y="216.667">
    <properties>
+    <property name="fileNameInfo" value="nullptr"/>
     <property name="nameTextureLight" value="forestLight.png"/>
     <property name="nameTextureOrigin" value="forest.png"/>
    </properties>
@@ -27,6 +29,7 @@
   </object>
   <object id="5" name="Village3" type="village" x="560.334" y="291">
    <properties>
+    <property name="fileNameInfo" value="nullptr"/>
     <property name="nameTextureLight" value="villageLight.png"/>
     <property name="nameTextureOrigin" value="village.png"/>
    </properties>
@@ -34,6 +37,7 @@
   </object>
   <object id="6" name="City2" type="city" x="856.33" y="413">
    <properties>
+    <property name="fileNameInfo" value="nullptr"/>
     <property name="nameTextureLight" value="cityLight.png"/>
     <property name="nameTextureOrigin" value="city.png"/>
    </properties>
@@ -41,6 +45,7 @@
   </object>
   <object id="7" name="Village2" type="village" x="757" y="511">
    <properties>
+    <property name="fileNameInfo" value="nullptr"/>
     <property name="nameTextureLight" value="villageLight.png"/>
     <property name="nameTextureOrigin" value="village.png"/>
    </properties>
@@ -48,6 +53,7 @@
   </object>
   <object id="8" name="City1" type="city" x="609.667" y="569.667">
    <properties>
+    <property name="fileNameInfo" value="nullptr"/>
     <property name="nameTextureLight" value="cityLight.png"/>
     <property name="nameTextureOrigin" value="city.png"/>
    </properties>
@@ -55,6 +61,7 @@
   </object>
   <object id="9" name="Swamp1" type="swamp" x="482" y="421">
    <properties>
+    <property name="fileNameInfo" value="nullptr"/>
     <property name="nameTextureLight" value="swampLight.png"/>
     <property name="nameTextureOrigin" value="swamp.png"/>
    </properties>
@@ -62,6 +69,7 @@
   </object>
   <object id="10" name="Village1" type="village" x="319.666" y="503.334">
    <properties>
+    <property name="fileNameInfo" value="mapConfig/Village1/test.tmx"/>
     <property name="nameTextureLight" value="villageLight.png"/>
     <property name="nameTextureOrigin" value="village.png"/>
    </properties>
@@ -69,6 +77,7 @@
   </object>
   <object id="11" name="Cave1" type="cave" x="146" y="314.666">
    <properties>
+    <property name="fileNameInfo" value="nullptr"/>
     <property name="nameTextureLight" value="caveLight.png"/>
     <property name="nameTextureOrigin" value="cave.png"/>
    </properties>

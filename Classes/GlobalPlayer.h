@@ -17,6 +17,8 @@ public:
 
 	void moveTo(int indexLocation);
 
+	int getCurrentPoint() { return _point; }
+
 private:
 	void _initPath(int indexLocation);
 
@@ -26,4 +28,6 @@ private:
 	std::vector<cocos2d::Vec2> _positionLocation;
 
 	int _startPosition = 0;
+	int _point = -1;
+	bool func = false;
 };

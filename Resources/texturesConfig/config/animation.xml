@@ -3,4 +3,6 @@
 <Animations>
   <animation key="run" source="texturesConfig/textures/mainHero/runAnimation.plist" countFrame="13" duration="0,2"/>
   <animation key="idle" source="texturesConfig/textures/mainHero/idleAnimation.plist" countFrame="8" duration="0,2"/>
+  <animation key="damageRun" source="texturesConfig/textures/npc/damage/damageRun.plist" countFrame="13" duration="0,2"/>
+  <animation key="damageIdle" source="texturesConfig/textures/npc/damage/damageIdle.plist" countFrame="8" duration="0,2"/>
 </Animations>

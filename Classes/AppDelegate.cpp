@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-/*#include "StartScene.h"
-#include "MainMenu.h"
+#include "StartScene.h"
+/*#include "MainMenu.h"
 #include "MainScene.h"
 #include "TestScene.h"*/
 #include "MapScene.h"
@@ -96,7 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    //director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
@@ -130,14 +130,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	SpriteFrameCache* spriteCache = SpriteFrameCache::getInstance();
 	spriteCache->addSpriteFramesWithFile("texturesConfig/textures/globalMap/locations.plist");
+	spriteCache->addSpriteFramesWithFile("texturesConfig/textures/eatObjects/eatObjects.plist");
+	spriteCache->addSpriteFramesWithFile("texturesConfig/textures/interface/interface.plist");
 
     // create a scene. it's an autorelease object
     //auto scene = HelloWorld::createScene();
 	//auto scene = StartScene::createScene();
-	auto scene = GameScene::createScene();
+	auto scene2 = GameScene::createScene("mapConfig/Village1/locationMap.tmx");
+	auto scene = MapScene::createScene();
 
     // run
     director->runWithScene(scene);
+	director->replaceScene(scene2);
 
     return true;
 }

@@ -25,5 +25,7 @@ private:
 private:
 	cocos2d::Vector<Location*> _locations;
 
+	int _point = 0;
+
 	GlobalPlayer* _player;
 };

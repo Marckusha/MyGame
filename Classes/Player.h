@@ -9,13 +9,18 @@ public:
 
 	virtual void update(float dt) override;
 
+	void blockAllAction();
 	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void onKeyReleased(cocos2d::EventKeyboard::KeyCode, cocos2d::Event* event);
+
+	virtual ~Player() { auto debug2 = 0; }
 
 protected:
 	int _countJump = 0;
 	int _countRun = 0;
 	State _state = notjump;
+
+	bool _isAction = true;
 
 	//speed
 	cocos2d::Vec2 _dtPosition;

@@ -10,11 +10,12 @@ public:
 	//BaseActor();
 	BaseActor(const AnimationMap& animMap, const cocos2d::Vec2& position, std::shared_ptr<b2World> world);
 
-	virtual void init();
+	//virtual void init();
 	virtual void update(float dt);
 
 	cocos2d::Sprite* getSprite() const { return sprite; }
 	cocos2d::Vec2 getVelocity() const { return _speed; }
+	b2Body* getBody() const { return _body; }
 
 	virtual ~BaseActor();
 

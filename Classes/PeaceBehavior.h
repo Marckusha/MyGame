@@ -6,12 +6,10 @@ public:
 	//first - time delay, second - coordinate
 	typedef std::pair<float, cocos2d::Vec2> Way;
 
-	PeaceBehavior()
-	{	}
+	PeaceBehavior() 	{}
 
-	explicit PeaceBehavior(std::shared_ptr<Actor> actor, const std::list<Way>& ways)
-		: ActorBehavior(actor)
-		, _ways(ways)
+	PeaceBehavior(const std::list<Way>& ways)
+		: _ways(ways)
 	{
 		_currentWay = _ways.begin();
 	}
@@ -21,7 +19,9 @@ public:
 		_currentWay = _ways.begin();
 	}
 
-	virtual void update(float dt) override;
+	virtual void update(float dt, Actor* actor) override;
+
+	virtual void apply(std::shared_ptr<Player> player) override;
 
 protected:
 	std::list<Way> _ways;

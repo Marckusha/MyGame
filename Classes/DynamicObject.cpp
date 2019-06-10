@@ -32,6 +32,7 @@ bool DynamicObject::init(const Vec2& position, const Vec2& size) {
 	}
 
 	auto world = GameInfo::getInstance().getWorld();
+	auto worldNPC = GameInfo::getInstance().getWorldForNPC();
 	auto SCALE = GameInfo::getInstance().getScaleWorld();
 
 	b2BodyDef bodyDef;
@@ -39,6 +40,7 @@ bool DynamicObject::init(const Vec2& position, const Vec2& size) {
 	bodyDef.type = b2_kinematicBody;
 
 	_body = world->CreateBody(&bodyDef);
+	_body2 = worldNPC->CreateBody(&bodyDef);
 
 	b2PolygonShape sh;
 	sh.SetAsBox((size.x / 2.f) / SCALE, (size.y / 2.f) / SCALE);
@@ -49,6 +51,7 @@ bool DynamicObject::init(const Vec2& position, const Vec2& size) {
 	fixDef.friction = 1.f;
 	fixDef.shape = _shape;
 	_body->CreateFixture(&fixDef);
+	_body2->CreateFixture(&fixDef);
 
 	return true;
 }

@@ -3,45 +3,49 @@
 #include "AnimationSet.h"
 #include "HorizontalDynamicObject.h"
 #include "PeaceBehavior.h"
+#include "DamageBehavior.h"
+#include "ActorFactory.h"
 
 USING_NS_CC;
 
-Scene* GameScene::createScene() {
-	return GameScene::create();
+Scene* GameScene::createScene(const std::string& str) {
+
+	GameScene *ret = new (std::nothrow) GameScene(str);
+	if (ret && ret->init())
+	{
+		ret->autorelease();
+		return ret;
+	}
+	else
+	{
+		CC_SAFE_DELETE(ret);
+		return nullptr;
+	}
 }
 
 bool GameScene::init() {
 	if (!Scene::init()) {
 		return false;
 	}
+
 	auto gameInfo = GameInfo::getInstance();
 	_world = gameInfo.getWorld();
 	_worldForNPC = GameInfo::getInstance().getWorldForNPC();
-	
 
-	TMXTiledMap* map = TMXTiledMap::create("mapConfig/Village1/locationMap.tmx");
+	TMXTiledMap* map = TMXTiledMap::create(_fileName);
 	map->setName("map");
 	this->addChild(map);
 
-	auto layer = map->getLayer("staticPlatforms");
-	this->createFixtures(layer);
-
+	//init animation
 	AnimationSet* animSet = AnimationSet::create("texturesConfig/config/animation.xml");
 	BaseActor::AnimationMap animMap;
 	animMap.insert(BaseActor::AnimationPair("idle", "idle"));
 	animMap.insert(BaseActor::AnimationPair("run", "run"));
 
-	//behavior actor
-	_baseActor = std::shared_ptr<Actor>(new Actor(animMap, Vec2(100, 300), _worldForNPC));
-	this->addChild(_baseActor->getSprite());	
-	_baseActor->setSpeed(Vec2(15.f, 0));
-
-	std::list<PeaceBehavior::Way> ways;
-	ways.push_back(PeaceBehavior::Way(3, Vec2(600, 0)));
-	ways.push_back(PeaceBehavior::Way(3, Vec2(100, 0)));
-	ways.push_back(PeaceBehavior::Way(2, Vec2(1000, 0)));
-	std::shared_ptr<PeaceBehavior> _peaceBehavior(new PeaceBehavior(_baseActor, ways));
-	_baseActor->setBehavior(_peaceBehavior);
+	auto layer = map->getLayer("staticPlatforms");
+	this->createFixtures(layer);
+	this->createActors(map->getObjectGroup("peaceActor"));
+	this->createKinematicObject(map->getObjectGroup("kinematicObject"));
 
 	_player = std::shared_ptr<Player>(new Player(animMap, Vec2(500, 300), _world));
 	this->addChild(_player->getSprite());
@@ -58,28 +62,27 @@ bool GameScene::init() {
 	auto camera = this->getDefaultCamera();
 	camera->setPosition(Vec2(visibleSize.width / 2.f, visibleSize.height / 2.f));
 	_gameCamera = GameCamera(camera, _player);
+
+	_healthPoint = std::shared_ptr<HealthPoint>(new HealthPoint(this));
 	
 	/*DEBUG*/
-
-	/*_actor = std::shared_ptr<Actor>(new Actor());
-	this->addChild(_actor->getSprite());*/
-	
-	//std::shared_future<BehaviorDynamicObject> behavior(new BehaviorDynamicObject());
 
 	//_contList = ContactListener(_player, this);
 	//_world->SetContactListener(&_contList);
 
-	/*_dyn = DynamicObject::createObject("res/red.jpg");
-	_dyn->init(Vec2(600, 200), Vec2(100, 50));
-	this->addChild(_dyn);
-
-	std::shared_ptr<MoveDynamicObject> behavior(new MoveDynamicObject());
-	behavior->setSpeed(5.f);
-	behavior->setBorders(Vec2(600, 240), Vec2(1500, 240));
-	_dyn->initBehavior(behavior);*/
+	
 
 	return true;
 }
+
+/*void GameScene::_initObjects() {
+
+	auto world = GameInfo::getInstance().getWorldForNPC();
+
+	std::shared_ptr<ObjectGame> obj(new ObjectGame("apple.jpg", Vec2(1000, 300), world));
+	this->addChild(obj->getSprite());
+	_objects.push_back(obj);
+}*/
 
 void GameScene::update(float dt) {
 
@@ -87,19 +90,75 @@ void GameScene::update(float dt) {
 	_world->Step(dt, 6, 2);
 	_worldForNPC->Step(dt, 6, 2);
 
-	_baseActor->update(dt);
 	_player->update(dt);
-	//_dyn->update(dt);
 	_gameCamera.update(dt);
+	_healthPoint->setPosition(_gameCamera.getPosition());
+
+	for (auto actor : _actors) {
+		actor->update(dt);
+	}
+
+	for (auto object : _dynamicObjects) {
+		object->update(dt);
+	}
+
+	//object
+	/*for (auto object : _objects) {
+		object->update(dt);
+	}*/
+
+	//logic game
+
+	for (auto actor : _actors) {
+		auto boxActor = actor->getSprite()->getBoundingBox();
+		auto boxPlayer = _player->getSprite()->getBoundingBox();
+		auto leftPos = _player->getSprite()->getPosition();
+		auto rightPos = _player->getSprite()->getPosition();
+
+		if (boxActor.containsPoint(leftPos) || boxActor.containsPoint(rightPos)) {
+			auto behavior = dynamic_pointer_cast<DamageBehavior>(actor->getBehavior());
+			if (behavior && behavior->getActiveDamage()) {
+				_healthPoint->update(HealthPoint::State::damage);
+			}
+			actor->apply(_player);			
+		}
+	}	
 }
 
 void GameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (_isPause) {
+		return;
+	}
+
 	_player->onKeyPressed(keyCode, event);
 }
 
 void GameScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
+
+	if (keyCode == EventKeyboard::KeyCode::KEY_P) {
+		if (!_isPause) {
+			this->unscheduleUpdate();
+			_isPause = true;
+		}
+		else {
+			this->scheduleUpdate();
+			_isPause = false;
+		}
+	}
+
+	if (_isPause) {
+		return;
+	}
+
 	_player->onKeyReleased(keyCode, event);
 	_gameCamera.onKeyReleased(keyCode, event);
+
+	if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+		this->unscheduleUpdate();
+
+		Director::getInstance()->popScene();
+		auto debug2 = 0;
+	}
 }
 
 void GameScene::createFixtures(TMXLayer* layer) {
@@ -150,7 +209,44 @@ void GameScene::createFixtures(TMXLayer* layer) {
 	}
 }
 
-void GameScene::createRectangularFixture(TMXLayer* layer, int x, int y, float width, float height) {
+void GameScene::createActors(cocos2d::TMXObjectGroup* objectGroup) {
+	for (auto object : objectGroup->getObjects()) {
+
+		NPCInfo info;
+
+		float x = object.asValueMap().at("x").asFloat();
+		float y = object.asValueMap().at("y").asFloat();
+
+		info.startPosition = Vec2(x, y);
+		info.speed = Vec2(15.f, 0.f);
+		
+		BaseActor::AnimationMap animMap;
+		animMap.insert(BaseActor::AnimationPair("idle", "damageIdle"));
+		animMap.insert(BaseActor::AnimationPair("run", "damageRun"));
+
+		info.animationMap = animMap;
+		//путь к файлу, который описывает персонажа
+		std::string aboutFile = object.asValueMap().at("AboutFile").asString();
+		std::string nameAnimation = object.asValueMap().at("NameAnimation").asString();
+		float leftPos = object.asValueMap().at("LeftPos").asFloat();
+		float rightPos = object.asValueMap().at("RightPos").asFloat();
+
+		std::list<PeaceBehavior::Way> ways;
+		ways.push_back(PeaceBehavior::Way(3, Vec2(leftPos, 0)));
+		ways.push_back(PeaceBehavior::Way(3, Vec2(rightPos, 0)));
+
+		info.ways = ways;
+
+		if (aboutFile == "damage") {
+			std::shared_ptr<ActorFactory> factory(new DamageFactory());
+			auto actor = factory->createActor(info);
+			this->addChild(actor->getSprite());
+			_actors.push_back(actor);
+		}
+	}
+}
+
+/*void GameScene::createRectangularFixture(TMXLayer* layer, int x, int y, float width, float height) {
 
 	GameInfo& info = GameInfo::getInstance();
 	auto world = info.getWorld();
@@ -190,6 +286,32 @@ void GameScene::createRectangularFixture(TMXLayer* layer, int x, int y, float wi
 	//fixtureDef.filter.categoryBits = kFilterCategoryLevel;
 	fixtureDef.filter.maskBits = 0xffff;
 	body->CreateFixture(&fixtureDef);
+}*/
+
+void GameScene::createKinematicObject(cocos2d::TMXObjectGroup* objectGroup) {
+	for (auto object : objectGroup->getObjects()) {
+
+		float x = object.asValueMap().at("x").asFloat();
+		float y = object.asValueMap().at("y").asFloat();
+
+		float SizeX = object.asValueMap().at("SizeX").asFloat();
+		float SizeY = object.asValueMap().at("SizeY").asFloat();
+		float leftPos = object.asValueMap().at("Left").asFloat();
+		float rightPos = object.asValueMap().at("Right").asFloat();
+		float speed = object.asValueMap().at("Speed").asFloat();
+
+		auto dyn = DynamicObject::createObject("res/block.jpg");
+		dyn->init(Vec2(x, y), Vec2(SizeX, SizeY));
+		this->addChild(dyn);
+
+		std::shared_ptr<MoveDynamicObject> behavior(new MoveDynamicObject());
+		behavior->setSpeed(speed);
+		behavior->setBorders(Vec2(leftPos, y), Vec2(rightPos, y));
+		dyn->initBehavior(behavior);
+
+		_dynamicObjects.push_back(dyn);
+	}
+	
 }
 
 /*Unit* MainScene::addObject(std::string className, Vec2 pos)

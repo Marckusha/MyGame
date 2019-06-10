@@ -21,3 +21,10 @@ void GameInfo::init() {
 
 	_world = std::shared_ptr<b2World>(new b2World(b2Vec2(0.f, kGravity)));
 }
+
+void GameInfo::destroy() {
+
+	if (!_world->IsLocked()) {
+		_world->~b2World();
+	}
+}

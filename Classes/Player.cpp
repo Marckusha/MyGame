@@ -18,6 +18,7 @@ void Player::update(float dt) {
 	else {
 		_state = notjump;
 		_countJump = 0;
+		_isAction = true;
 	}
 
 	//velocity
@@ -33,13 +34,19 @@ void Player::update(float dt) {
 	}
 }
 
-void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
+void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {	
 
 	//TODO
 	///from XML
 	float inmpulse = 1000 / 2.f;
 
 	if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW) {
+
+		_countRun++;
+		
+		if (!_isAction) {
+			return;
+		}
 
 		sprite->stopAllActions();
 
@@ -55,10 +62,13 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 
 		_body->SetLinearVelocity(b2Vec2(-15, 0));
 		sprite->setRotationSkewY(180);
-		_countRun++;
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW) {
+		_countRun++;
 
+		if (!_isAction) {
+			return;
+		}
 		sprite->stopAllActions();
 		//TODO
 		///from XML
@@ -73,8 +83,9 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		_setAnimation("run");
 
 		_body->SetLinearVelocity(b2Vec2(15, 0));
+		//_body->ApplyLinearImpulseToCenter(b2Vec2(15, 15), true);
 		sprite->setRotationSkewY(0);
-		_countRun++;
+		//_countRun++;
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_UP_ARROW && _countJump < 2) {
 		_body->ApplyForceToCenter(b2Vec2(0, inmpulse * 2), true);
@@ -86,10 +97,17 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 
 void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 
+	/*if (!_isAction) {
+		return;
+	}*/
+
 	if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW) {
 
 		_countRun--;
-
+		if (!_isAction) {
+			return;
+		}
+		auto cc = _countRun;
 		//from friction on dynamic blocks
 		if (_countRun == 0) {
 			sprite->stopAllActions();
@@ -99,7 +117,7 @@ void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 
 			auto contList = _body->GetContactList();
 			if (contList) {
-				contList->contact->SetFriction(1.f);
+				contList->contact->SetFriction(20.f);
 				contList->contact->SetEnabled(false);
 			}
 
@@ -108,7 +126,10 @@ void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 		}
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW) {
-		_countRun--;
+		_countRun--; 
+		if (!_isAction) {
+			return;
+		}
 		if (_countRun == 0) {
 
 			//TODO
@@ -118,13 +139,17 @@ void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 
 			auto contList = _body->GetContactList();
 			if (contList) {
-				contList->contact->SetFriction(1.f);
+				//TODO change for constanta
+				contList->contact->SetFriction(20.f);
 				contList->contact->SetEnabled(false);
 			}
-			//_body->GetContactList()->contact->SetFriction(1.f);
 
 			_body->SetLinearVelocity(b2Vec2(0, 0));
 			sprite->setRotationSkewY(0);
 		}
 	}
+}
+
+void Player::blockAllAction() {
+	_isAction = false;
 }

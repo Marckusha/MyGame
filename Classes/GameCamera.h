@@ -12,6 +12,8 @@ public:
 
 	void update(float dt);
 
+	cocos2d::Vec2 getPosition() const { return _camera->getPosition(); }
+
 private:
 	cocos2d::Camera* _camera;
 	std::shared_ptr<Player> _player;

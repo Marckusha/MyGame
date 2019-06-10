@@ -1,5 +1,6 @@
 #pragma once
-#include "BaseActor.h"
+//#include "BaseActor.h"
+#include "Player.h"
 
 class ActorBehavior;
 
@@ -11,7 +12,11 @@ public:
 		_behavior = behavior;
 	}
 
+	std::shared_ptr<ActorBehavior> getBehavior() const { return _behavior; }
+
 	virtual void update(float dt) override;
+
+	virtual void apply(std::shared_ptr<Player> player);
 
 	void moveToLeft();
 	void moveToRight();
@@ -20,6 +25,8 @@ public:
 	void setSpeed(const cocos2d::Vec2& speed) {
 		_speed = speed;
 	}
+
+	virtual ~Actor();
 
 protected:
 	std::shared_ptr<ActorBehavior> _behavior;
